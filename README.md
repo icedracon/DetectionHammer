@@ -6,6 +6,8 @@
 <p align="center"><strong>Prove what your defenses can see.</strong></p>
 <p align="center">Claude Code · Codex · Active Directory · Evidence-first defensive review</p>
 
+[![Evidence checks](https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml/badge.svg?branch=main)](https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml)
+
 <p align="center">
   <a href="skills/detectionhammer-ad/SKILL.md">Read the skill</a> ·
   <a href="#quickstart">Quickstart</a> ·
