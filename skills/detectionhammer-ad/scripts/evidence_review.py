@@ -14,7 +14,7 @@ def evaluate(record):
         raise ValueError("Expected JSON object")
     if any(type(record.get(k)) is not bool for k in GATES):
         raise ValueError("All nine gates must be explicit booleans")
-    if record.get("mode") not in MODES:
+    if not isinstance(record.get("mode"), str) or record["mode"] not in MODES:
         raise ValueError("Invalid mode")
     refs = record.get("evidence_refs")
     if not isinstance(refs, list) or any(not isinstance(x, str) or not x.strip() for x in refs):
