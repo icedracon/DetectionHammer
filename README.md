@@ -1,25 +1,42 @@
 <p align="center">
-  <img src="assets/detectionhammer-hero.svg" alt="DetectionHammer violet animated security architecture" width="100%">
+  <img src="assets/detectionhammer-hero.svg" alt="DetectionHammer animated purple identity, telemetry and evidence architecture" width="100%">
 </p>
 
-<h1 align="center">DetectionHammer AD</h1>
+<h1 align="center">DetectionHammer</h1>
 <p align="center"><strong>Prove what your defenses can see.</strong></p>
-<p align="center">Claude Code · Codex · Active Directory · Evidence-first defensive review</p>
-
-[![Evidence checks](https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml/badge.svg?branch=main)](https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml)
+<p align="center">Active Directory · Detection Engineering · Evidence Validation</p>
 
 <p align="center">
-  <a href="skills/detectionhammer-ad/SKILL.md">Read the skill</a> ·
-  <a href="#quickstart">Quickstart</a> ·
-  <a href="#evidence-validation">Evidence validation</a> ·
-  <a href="docs/index.html">Interactive product tour (source)</a>
+  <a href="https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml"><img alt="Evidence checks" src="https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml/badge.svg?branch=main"></a>
+  <img alt="Release status: development preview" src="https://img.shields.io/badge/status-development%20preview-7c3aed?style=flat-square">
+  <img alt="Claude Code and Codex" src="https://img.shields.io/badge/agents-Claude%20Code%20%7C%20Codex-a855f7?style=flat-square">
+  <img alt="12 AD review domains" src="https://img.shields.io/badge/AD%20domains-12-6d28d9?style=flat-square">
 </p>
 
-> **v1.2.0-preview:** the standalone skill, 12 domain review methods, offline evaluator and tests are now in this repository. The earlier full 150-card release-candidate archive and its 12 experimental Sigma visibility rules have not yet been imported. Native Claude/Codex loading and live SIEM validation remain unverified.
+<p align="center">
+  <a href="#quickstart"><strong>Quickstart</strong></a> ·
+  <a href="skills/detectionhammer-ad/SKILL.md">Skill</a> ·
+  <a href="#evidence-validation">Evidence</a> ·
+  <a href="docs/index.html">Product tour source</a> ·
+  <a href="https://github.com/icedracon/DetectionHammer/issues">Feedback</a>
+</p>
+
+> [!IMPORTANT]
+> **Development preview | Next planned release: v0.0.1-beta.** This repository currently contains the standalone skill, 12 domain-level review methods, offline evidence evaluator and tests. The full 150-card beta source and experimental Sigma pack must be imported before the beta is published. Native agent installation, SIEM compilation and live detection validation remain unverified.
 
 ## Why DetectionHammer?
 
-A missing alert is not proof of a missed attack. DetectionHammer helps an analyst review authorized, exported AD evidence and distinguish configuration posture, execution evidence, telemetry, correlated alerts and prevention. It is not an attack executor or SIEM connector.
+A missing alert is not proof of a missed attack. DetectionHammer gives defenders an evidence-first workflow for authorized Active Directory security reviews.
+
+| Review dimension | What we establish |
+| :--- | :--- |
+| **Posture** | What configuration and security controls are observed |
+| **Execution** | Whether an authorized activity has independent evidence |
+| **Telemetry** | Whether relevant raw observations are available |
+| **Alert** | Whether a matching alert is supported by correlation |
+| **Prevention** | Whether a control outcome is independently supported |
+
+**Observe → Correlate → Challenge → Qualify → Report.** The skill treats uncertainty as a result, not a defect to hide. It is not an attack executor or a SIEM connector.
 
 <p align="center"><img src="assets/evidence-pipeline.svg" alt="Animated four-stage defensive evidence review workflow" width="100%"></p>
 
@@ -78,14 +95,14 @@ python skills/detectionhammer-ad/scripts/evidence_review.py skills/detectionhamm
 
 The synthetic example should return `INCONCLUSIVE`, because its negative alert search is incomplete. The test suite includes 1,536 boolean/mode combinations, input validation, and independent evidence-axis checks. See the [evidence contract](skills/detectionhammer-ad/references/evidence-contract.md).
 
-## Release gates
+## Release gates & beta roadmap
 
 | Capability | Status |
 |---|---|
 | Standalone skill and 12-domain methods | Available |
 | Offline evidence helper and synthetic tests | Available |
 | Claude/Codex plugin manifest scaffolding | Available; native loading unverified |
-| Full 150-card RC catalog and Sigma pack | Import pending |
+| Full 150-card beta catalog and Sigma pack | Source import pending |
 | SIEM compiler and live detection validation | Not verified |
 | Live attack execution | Not included |
 
