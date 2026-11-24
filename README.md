@@ -1,5 +1,10 @@
 # DetectionHammer AD Skill v1.1.0-rc.1
 
+<p align="center">
+  <img src="assets/detectionhammer-hero.svg" alt="DetectionHammer: Active Directory defensive validation, animated identity, telemetry and evidence layers" width="100%">
+</p>
+
+
 > **Repository staging notice:** The documentation is published; the complete release-candidate source tree has not yet been imported. The installation commands below become usable after the full source import. Native client and live SIEM testing remain outstanding.
 
 Part 1: portable AI skill for authorized Active Directory defensive validation. Independent of DetectionHammer Hybrid v0.2 and its dashboard. English source files for AI-agent interoperability.
