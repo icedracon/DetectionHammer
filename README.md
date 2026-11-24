@@ -9,6 +9,10 @@
 
 Part 1: portable AI skill for authorized Active Directory defensive validation. Independent of DetectionHammer Hybrid v0.2 and its dashboard. English source files for AI-agent interoperability.
 
+## Interactive product tour
+
+Explore the animated 3D-style architecture, the 12 AD security domains and the synthetic evidence-verdict walkthrough in the [product tour source](docs/index.html). This is an illustrative website, not a live scanner or full catalog browser. To publish it, enable GitHub Pages for `main` → `/docs` in repository Settings → Pages.
+
 ## What is included
 - 150 distinct AD defensive scenario cards in 12 modules (JSON, CSV and Markdown).
 - ESC1–ESC16 posture review index, separate from the 150 count.
