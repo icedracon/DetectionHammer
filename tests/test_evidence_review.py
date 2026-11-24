@@ -30,7 +30,7 @@ class EvidenceTests(unittest.TestCase):
     def test_validation(self):
         r = dict.fromkeys(GATES, True)
         r.update(mode="synthetic", evidence_refs=["fixture:1"])
-        for change in ({"authorized": 1}, {"mode": "unknown"}, {"evidence_refs": [""]},
+        for change in ({"authorized": 1}, {"mode": "unknown"}, {"mode": []}, {"mode": {}}, {"evidence_refs": [""]},
                        {"evidence_refs": ["x", "x"]}, {"evidence_refs": "x"}):
             with self.assertRaises(ValueError):
                 evaluate(dict(r, **change))
