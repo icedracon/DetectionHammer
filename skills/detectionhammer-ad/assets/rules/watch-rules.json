@@ -1,0 +1,86 @@
+[
+  {
+    "name": "account-created",
+    "id": "fd922bb8-7fea-513a-9abf-adf25d7df764",
+    "event_id": 4720,
+    "channel": "Security",
+    "classification": "visibility_only"
+  },
+  {
+    "name": "account-enabled",
+    "id": "bd9a9238-2744-5718-a3dd-849929af5937",
+    "event_id": 4722,
+    "channel": "Security",
+    "classification": "visibility_only"
+  },
+  {
+    "name": "password-reset",
+    "id": "52c073b1-0ab3-55ba-a95f-41ec88dca225",
+    "event_id": 4724,
+    "channel": "Security",
+    "classification": "visibility_only"
+  },
+  {
+    "name": "account-deleted",
+    "id": "0141e44a-ad7d-5795-85ef-00f46ec3c085",
+    "event_id": 4726,
+    "channel": "Security",
+    "classification": "visibility_only"
+  },
+  {
+    "name": "global-group-add",
+    "id": "89b5cbff-635a-5148-8f15-411222208065",
+    "event_id": 4728,
+    "channel": "Security",
+    "classification": "visibility_only"
+  },
+  {
+    "name": "account-lockout",
+    "id": "d6092ef8-4e3f-5b00-b44b-82ed2baeafd7",
+    "event_id": 4740,
+    "channel": "Security",
+    "classification": "visibility_only"
+  },
+  {
+    "name": "computer-created",
+    "id": "c84a215a-ba70-5505-81c6-c3e896e28d17",
+    "event_id": 4741,
+    "channel": "Security",
+    "classification": "visibility_only"
+  },
+  {
+    "name": "trust-created",
+    "id": "bf0aa684-a3b9-5068-96eb-508ddada2daa",
+    "event_id": 4706,
+    "channel": "Security",
+    "classification": "visibility_only"
+  },
+  {
+    "name": "audit-policy-change",
+    "id": "c554cead-b4b5-5b97-af68-b84cec92e614",
+    "event_id": 4719,
+    "channel": "Security",
+    "classification": "visibility_only"
+  },
+  {
+    "name": "security-log-clear",
+    "id": "0e045522-dd97-5b26-b1af-a8d01f1a5a2f",
+    "event_id": 1102,
+    "channel": "Security",
+    "classification": "visibility_only"
+  },
+  {
+    "name": "directory-object-change",
+    "id": "daad5f33-09d2-50fd-8359-1d88e44254b8",
+    "event_id": 5136,
+    "channel": "Security",
+    "classification": "visibility_only"
+  },
+  {
+    "name": "certificate-issued",
+    "id": "f278d461-e6e9-545d-a701-327267c1208f",
+    "event_id": 4887,
+    "channel": "Security",
+    "classification": "visibility_only"
+  }
+]

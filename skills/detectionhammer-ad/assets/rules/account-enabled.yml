@@ -1,0 +1,18 @@
+title: Account enablement - AD review signal
+id: bd9a9238-2744-5718-a3dd-849929af5937
+status: experimental
+description: Event visibility watch; not a standalone malicious-activity verdict.
+  Confirm scope, audit source, and business context.
+references:
+- https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4722
+  condition: selection
+falsepositives:
+- Authorized account reactivation or incident recovery.
+level: informational
+author: DetectionHammer contributors

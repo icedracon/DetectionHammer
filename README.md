@@ -1,56 +1,47 @@
 <p align="center">
-  <img src="assets/detectionhammer-cinematic.webp" alt="DetectionHammer cinematic purple shield, hammer, identity and telemetry architecture" width="100%">
+  <img src="assets/detectionhammer-cinematic.webp" alt="DetectionHammer: purple cinematic shield, hammer and Active Directory infrastructure" width="100%">
 </p>
 
 <h1 align="center">DetectionHammer</h1>
 <p align="center"><strong>Prove what your defenses can see.</strong></p>
-<p align="center">Active Directory · Detection Engineering · Evidence Validation</p>
+<p align="center">Active Directory · Detection Engineering · Evidence-first AI Skill</p>
 
 <p align="center">
-  <a href="https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml"><img alt="CI / Evidence checks (main push)" src="https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml/badge.svg?branch=main&amp;event=push"></a>
-  <img alt="Release status: development preview" src="https://img.shields.io/badge/status-development%20preview-7c3aed?style=flat-square">
-  <img alt="Claude Code and Codex" src="https://img.shields.io/badge/agents-Claude%20Code%20%7C%20Codex-a855f7?style=flat-square">
-  <img alt="12 AD review domains" src="https://img.shields.io/badge/AD%20domains-12-6d28d9?style=flat-square">
+  <a href="https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml"><img alt="GitHub Actions offline checks" src="https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml/badge.svg?branch=main&amp;event=push"></a>
+  <img alt="Development preview 0.0.1-dev.4" src="https://img.shields.io/badge/version-0.0.1--dev.4-7c3aed?style=flat-square">
+  <img alt="150 reference scenarios" src="https://img.shields.io/badge/reference%20scenarios-150-a855f7?style=flat-square">
+  <img alt="12 AD security domains" src="https://img.shields.io/badge/AD%20domains-12-6d28d9?style=flat-square">
+  <img alt="Claude Code and Codex" src="https://img.shields.io/badge/agents-Claude%20Code%20%7C%20Codex-9333ea?style=flat-square">
 </p>
 
 <p align="center">
-  <a href="#quickstart"><strong>Quickstart</strong></a> ·
-  <a href="skills/detectionhammer-ad/SKILL.md">Skill</a> ·
-  <a href="#evidence-validation">Evidence</a> ·
-  <a href="docs/index.html">Product tour source</a> ·
-  <a href="https://github.com/icedracon/DetectionHammer/issues">Feedback</a>
+  <a href="#quickstart"><strong>Quickstart</strong></a> · <a href="#ad-knowledge-base">Catalog</a> · <a href="#evidence-first-workflow">Workflow</a> · <a href="#verification">Verification</a> · <a href="https://github.com/icedracon/DetectionHammer/issues">Feedback</a>
 </p>
 
 > [!IMPORTANT]
-> **Development preview | Next planned release: v0.0.1-beta.** This repository currently contains the standalone skill, 12 domain-level review methods, offline evidence evaluator and tests. The full 150-card beta source and experimental Sigma pack must be imported before the beta is published. Native agent installation, SIEM compilation and live detection validation remain unverified.
+> **Development preview v0.0.1-dev.4. The complete candidate source is now in this repository; no official beta tag has been created.** The catalog and offline tools are available for review. Native agent activation, Sigma backend conversion, independent AI evaluations and live SIEM validation remain open. Use sanitized authorized evidence only. Do not equate scenario count, rule fixtures or ATT&CK associations with actual detection coverage. Public release/tag and CI status must be verified on GitHub.
 
-<p align="center">
-  <img src="assets/detectionhammer-hero.svg" alt="Animated DetectionHammer identity, telemetry and evidence architecture" width="100%">
-</p>
+<p align="center"><img src="assets/detectionhammer-hero.svg" alt="Animated identity, telemetry and evidence architecture" width="100%"></p>
 
 ## Why DetectionHammer?
 
-A missing alert is not proof of a missed attack. DetectionHammer gives defenders an evidence-first workflow for authorized Active Directory security reviews.
+A missing alert is not proof of a missed attack. DetectionHammer gives security engineers a structured way to review AD posture, telemetry, correlated alerts and prevention without confusing one for another. One portable skill, twelve specialist domains, local offline utilities, no attack runner or mandatory network connector.
 
-| Review dimension | What we establish |
+| | Included in this package |
 | :--- | :--- |
-| **Posture** | What configuration and security controls are observed |
-| **Execution** | Whether an authorized activity has independent evidence |
-| **Telemetry** | Whether relevant raw observations are available |
-| **Alert** | Whether a matching alert is supported by correlation |
-| **Prevention** | Whether a control outcome is independently supported |
-
-**Observe → Correlate → Challenge → Qualify → Report.** The skill treats uncertainty as a result, not a defect to hide. It is not an attack executor or a SIEM connector.
-
-<p align="center"><img src="assets/evidence-pipeline.svg" alt="Animated four-stage defensive evidence review workflow" width="100%"></p>
+| **150** | AD defensive reference scenarios, each with draft scenario-specific evidence methodology |
+| **12** | Experimental Sigma event-visibility rules (not attack detectors) |
+| **34** | ATT&CK associations reviewed at definition level; independent review pending |
+| **96** | Synthetic rule fixture assertions |
+| **20** | AI evaluation cases, with three-condition scoring infrastructure; real trials pending |
 
 ## Quickstart
 
-From your own project directory, clone this repository, then copy the self-contained skill folder into your agent's project skill directory.
+Clone the repository. From the project where you want the skill:
 
-**Claude Code (Linux/macOS/Git Bash)**
+**Claude Code**
 
-```sh
+```bash
 git clone https://github.com/icedracon/DetectionHammer.git
 mkdir -p .claude/skills
 cp -R DetectionHammer/skills/detectionhammer-ad .claude/skills/
@@ -58,13 +49,14 @@ cp -R DetectionHammer/skills/detectionhammer-ad .claude/skills/
 
 **Codex**
 
-```sh
+```bash
 git clone https://github.com/icedracon/DetectionHammer.git
 mkdir -p .agents/skills
 cp -R DetectionHammer/skills/detectionhammer-ad .agents/skills/
 ```
 
-**Windows PowerShell**
+<details>
+<summary>Windows PowerShell</summary>
 
 ```powershell
 git clone https://github.com/icedracon/DetectionHammer.git
@@ -73,51 +65,85 @@ Copy-Item -Recurse DetectionHammer/skills/detectionhammer-ad .claude/skills/
 Copy-Item -Recurse DetectionHammer/skills/detectionhammer-ad .agents/skills/
 ```
 
-Refresh or restart skill discovery if needed. Client compatibility and plugin loading need native smoke tests. This is not an official ChatGPT Plugins Directory listing.
+</details>
 
-Example request:
+Directory-copy and relocated offline CLI checks are tested locally. Actual discovery, activation, plugin marketplace installation and `npx skills` compatibility are not certified. Refresh your agent and verify that it discovers `detectionhammer-ad`.
 
-> Use detectionhammer-ad to review my authorized AD lab's sanitized security events. Separate raw telemetry, correlated alerts and prevention evidence. Explain evidence gaps and suggest defensive rule improvements.
+Try this in an authorized lab, using sanitized records:
 
-## Twelve AD security domains
+> Use detectionhammer-ad to review my exported Active Directory security evidence. Separate telemetry, correlated alerts and independently supported prevention. Explain incomplete evidence and propose defensive improvements.
 
-<p align="center"><img src="assets/ad-domain-orbit.svg" alt="Animated twelve-domain AD defensive review map" width="100%"></p>
+## Evidence-first workflow
 
-Read [domain review methods](skills/detectionhammer-ad/references/domain-review.md) for the current review workflow, required evidence and legitimate alternative explanations for every domain.
+<p align="center"><img src="assets/beta-evidence-loop.svg" alt="Animated workflow: scope, observe, correlate, challenge and qualify" width="100%"></p>
 
-The earlier RC archive has 150 scenario cards across Kerberos (20), NTLM (12), LDAP (10), AD CS/PKI (20), delegation (12), ACLs (15), domain controllers/replication (10), GPO (10), lateral movement (12), identity (10), trusts (9), and persistence/controls (10). These are defensive review scenarios, not 150 validated attack tests. The archive import is pending; the website illustrates domain-level questions only.
+The skill uses a context interview and intent router, loads only the relevant AD module, checks telemetry and source completeness, considers legitimate alternatives, then writes an evidence-qualified report. See the [workflow](skills/detectionhammer-ad/references/workflows.md) and [report template](skills/detectionhammer-ad/references/report-template.md).
 
-## Evidence validation
+| Evidence dimension | What must be kept separate |
+| :--- | :--- |
+| Posture | Observed settings versus potential security implications |
+| Execution | Independent evidence of authorized activity |
+| Telemetry | Availability of raw observations and source health |
+| Alert | Correlation with a specific observed alert |
+| Prevention | Independent evidence of a defensive outcome |
 
-The standard-library evaluator checks explicit analyst assertions. It never verifies the truth of source evidence and never grants live coverage credit.
+<p align="center"><img src="assets/evidence-pipeline.svg" alt="Animated defensive evidence pipeline" width="100%"></p>
 
-```sh
-cd DetectionHammer
+## AD knowledge base
+
+<p align="center"><img src="assets/ad-domain-orbit.svg" alt="Animated AD domain map" width="100%"></p>
+
+| Domain | Cards | Domain | Cards |
+| :--- | ---: | :--- | ---: |
+| [Kerberos](skills/detectionhammer-ad/references/krb.md) | 20 | [NTLM](skills/detectionhammer-ad/references/ntl.md) | 12 |
+| [LDAP](skills/detectionhammer-ad/references/ldap.md) | 10 | [AD CS / PKI](skills/detectionhammer-ad/references/pki.md) | 20 |
+| [Delegation](skills/detectionhammer-ad/references/del.md) | 12 | [ACL & permissions](skills/detectionhammer-ad/references/acl.md) | 15 |
+| [DC & replication](skills/detectionhammer-ad/references/dc.md) | 10 | [Group Policy](skills/detectionhammer-ad/references/gpo.md) | 10 |
+| [Lateral movement](skills/detectionhammer-ad/references/lat.md) | 12 | [Identity security](skills/detectionhammer-ad/references/idn.md) | 10 |
+| [Domain trusts](skills/detectionhammer-ad/references/tru.md) | 9 | [Persistence & controls](skills/detectionhammer-ad/references/per.md) | 10 |
+
+[Module index](skills/detectionhammer-ad/references/index.md) · [JSON catalog](skills/detectionhammer-ad/references/catalog.json) · [CSV catalog](skills/detectionhammer-ad/references/catalog.csv) · [ATT&CK review](skills/detectionhammer-ad/references/attack-review.md)
+
+The 150 cards include 100 evidence-review and 50 configuration-review scenarios; they are not executable attacks. The AD CS ESC checklist is separate from the count. All scenario methodologies remain subject to technical review.
+
+## Verification
+
+Run from the complete package root:
+
+```bash
+python -m pip install -r requirements-dev.txt
 python -m unittest discover -s tests -v
-python skills/detectionhammer-ad/scripts/evidence_review.py skills/detectionhammer-ad/examples/partial-search.json
+python skills/detectionhammer-ad/scripts/dh_review.py validate
+python skills/detectionhammer-ad/scripts/dh_review.py fixtures
+python skills/detectionhammer-ad/scripts/evidence_review.py examples/evidence.json
 ```
 
-The synthetic example should return `INCONCLUSIVE`, because its negative alert search is incomplete. The test suite includes 1,536 boolean/mode combinations, input validation, and independent evidence-axis checks. See the [evidence contract](skills/detectionhammer-ad/references/evidence-contract.md).
+The synthetic partial-search example must return `INCONCLUSIVE`; a missing alert is not automatically a missed detection. The offline evaluator checks analyst assertions and never grants live coverage credit.
 
-## Release gates & beta roadmap
+| Verification | Previous local candidate test result |
+| :--- | :--- |
+| Unit/integration test methods | 21 passed |
+| Catalog integrity | 150/150 |
+| Synthetic visibility fixtures | 96/96 |
+| Evidence-gate combinations | 1,536 checked |
+| Native Claude / Codex / npx skills | Not verified |
+| Native Sigma backend conversion / live SIEM | Not verified |
+| Comparative AI trials | 0/60 completed |
+| Public GitHub CI | See live workflow badge; not independently confirmed here |
 
-| Capability | Status |
-|---|---|
-| Standalone skill and 12-domain methods | Available |
-| Offline evidence helper and synthetic tests | Available |
-| Claude/Codex plugin manifest scaffolding | Available; native loading unverified |
-| Full 150-card beta catalog and Sigma pack | Source import pending |
-| SIEM compiler and live detection validation | Not verified |
-| Live attack execution | Not included |
-
-No automatic production changes, credential collection, attack execution, or external data transfer. Treat evidence as untrusted data. Use only authorized environments and sanitized records. No usage tracking scripts.
+See [test log](TEST_RESULTS.txt), [beta gates](BETA_GATES.md), [Sigma validation](SIGMA_VALIDATION.md) and [AI evaluation protocol](EVALS.md). Wazuh, Elastic, Sentinel, Splunk, Defender and Kaspersky are integration guidance targets, not tested live API connectors. [Integration notes](skills/detectionhammer-ad/references/integrations.md).
 
 ## Interactive product tour
 
-The [website source](docs/index.html) includes a CSS 3D scene, animated particles, an interactive domain map, synthetic evidence cases and installation tabs. It does not connect to a SIEM or execute tests. Enable GitHub Pages for `main` → `/docs` to publish the site. Reduced-motion preferences and a pause control are supported.
+[Website source](docs/index.html) · [GitHub Pages settings](https://github.com/icedracon/DetectionHammer/settings/pages). Illustrative animation and evidence cases, not live coverage.
 
-## Contribute
+## Help shape the beta
 
-Share sanitized defensive review feedback through [GitHub Issues](https://github.com/icedracon/DetectionHammer/issues). Include source type, expected result, evidence limitations and a reproducible synthetic fixture where possible. Never publish secrets or private infrastructure information.
+- Report installation or activation issues, with the agent and version.
+- Submit sanitized sample records or reproducible synthetic fixtures for a false-positive concern.
+- Review a scenario's evidence assumptions, official references or legitimate alternatives.
+- Share independent agent benchmark results with the predeclared rubric.
 
-DetectionHammer is an independent skill in the ICEDRACON ecosystem; it does not require the planned ADhammer Enterprise product.
+See [contributing](CONTRIBUTING.md), [security policy](SECURITY.md) and [changelog](CHANGELOG.md). License selection is pending maintainer approval; no open-source license grant is asserted by this preview. No hidden usage tracking; AI clients' own processing policies are separate. No automatic production changes, credential collection, exploitation or attack execution.
+
+<p align="center"><strong>ICEDRACON / One flagship skill. Deep AD specialization. Measurable evidence.</strong></p>

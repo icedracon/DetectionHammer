@@ -1,0 +1,18 @@
+title: Security audit log cleared - AD review signal
+id: 0e045522-dd97-5b26-b1af-a8d01f1a5a2f
+status: experimental
+description: Event visibility watch; not a standalone malicious-activity verdict.
+  Confirm scope, audit source, and business context.
+references:
+- https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 1102
+  condition: selection
+falsepositives:
+- Authorized log maintenance or isolated lab reset.
+level: informational
+author: DetectionHammer contributors

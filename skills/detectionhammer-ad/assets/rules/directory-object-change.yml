@@ -1,0 +1,18 @@
+title: Directory object modification - AD review signal
+id: daad5f33-09d2-50fd-8359-1d88e44254b8
+status: experimental
+description: Event visibility watch; not a standalone malicious-activity verdict.
+  Confirm scope, audit source, and business context.
+references:
+- https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 5136
+  condition: selection
+falsepositives:
+- Approved directory administration or IAM synchronization.
+level: informational
+author: DetectionHammer contributors

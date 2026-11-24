@@ -1,0 +1,18 @@
+title: Certificate issuance - AD review signal
+id: f278d461-e6e9-545d-a701-327267c1208f
+status: experimental
+description: Event visibility watch; not a standalone malicious-activity verdict.
+  Confirm scope, audit source, and business context.
+references:
+- https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4887
+  condition: selection
+falsepositives:
+- Routine enrollment, automatic renewal or approved certificate issuance.
+level: informational
+author: DetectionHammer contributors

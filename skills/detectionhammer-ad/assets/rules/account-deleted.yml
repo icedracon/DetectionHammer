@@ -1,0 +1,18 @@
+title: Account deletion - AD review signal
+id: 0141e44a-ad7d-5795-85ef-00f46ec3c085
+status: experimental
+description: Event visibility watch; not a standalone malicious-activity verdict.
+  Confirm scope, audit source, and business context.
+references:
+- https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4726
+  condition: selection
+falsepositives:
+- Authorized offboarding or service-account decommission.
+level: informational
+author: DetectionHammer contributors

@@ -1,0 +1,13 @@
+{
+  "mode": "synthetic",
+  "authorized": true,
+  "execution_confirmed": true,
+  "expected_alert": true,
+  "sources_complete": false,
+  "ingestion_window_elapsed": true,
+  "correlation_verified": true,
+  "alert_observed": false,
+  "prevention_confirmed": false,
+  "telemetry_observed": true,
+  "evidence_refs": ["synthetic:example-001"]
+}

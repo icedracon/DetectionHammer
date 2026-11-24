@@ -1,0 +1,13 @@
+{
+  "name": "icedracon-security",
+  "owner": {
+    "name": "ICEDRACON"
+  },
+  "plugins": [
+    {
+      "name": "detectionhammer-ad",
+      "source": "./",
+      "description": "Active Directory defensive evidence review"
+    }
+  ]
+}

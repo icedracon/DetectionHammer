@@ -1,0 +1,3145 @@
+{
+  "version": "0.0.1-dev.3",
+  "status": "reference_hypotheses_not_live_tests",
+  "scenarios": [
+    {
+      "id": "DH-KRB-001",
+      "module": "KRB",
+      "title": "Kerberoasting behavior",
+      "mode": "evidence_review",
+      "event_ids": [
+        4769
+      ],
+      "attack_candidate": "T1558.003",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review service-ticket activity against account and service baseline",
+      "positive_evidence": "Compare DC ticket records with an independently recorded authorized test and established application usage.",
+      "negative_control": "Routine service authentication and scheduled jobs.",
+      "limitations": "A ticket request alone does not establish password recovery or compromise.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1558/003/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-002",
+      "module": "KRB",
+      "title": "AS-REP roasting behavior",
+      "mode": "evidence_review",
+      "event_ids": [
+        4768,
+        4771
+      ],
+      "attack_candidate": "T1558.004",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review unusual authentication requests and preauthentication status",
+      "positive_evidence": "Review successful authentication records with the account policy snapshot and independently documented lab activity.",
+      "negative_control": "Approved accounts with legacy authentication exceptions.",
+      "limitations": "Failed preauthentication alone does not establish this technique; ticket acquisition does not establish password recovery.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1558/004/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-003",
+      "module": "KRB",
+      "title": "Golden ticket suspicion",
+      "mode": "evidence_review",
+      "event_ids": [
+        4768,
+        4769,
+        4624
+      ],
+      "attack_candidate": "T1558.001",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Correlate identity sensor alerts and ticket history; missing history alone is insufficient",
+      "positive_evidence": "Correlate identity alerts with historical DC and endpoint records and the independent incident or lab record.",
+      "negative_control": "Legitimate long-running sessions and incomplete retention.",
+      "limitations": "Missing ticket history is not evidence of forgery.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1558/001/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-004",
+      "module": "KRB",
+      "title": "Silver ticket suspicion",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624,
+        4769
+      ],
+      "attack_candidate": "T1558.002",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review service-side logons and available KDC evidence; account for cached tickets",
+      "positive_evidence": "Review service-side authentication evidence alongside identity alerts and retained DC records for the scoped session.",
+      "negative_control": "Ordinary service sessions and cached credentials.",
+      "limitations": "Missing DC events alone cannot establish ticket forgery.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1558/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-005",
+      "module": "KRB",
+      "title": "Pass-the-ticket suspicion",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624,
+        4769
+      ],
+      "attack_candidate": "T1550.003",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review unexpected account and device combinations with EDR context",
+      "positive_evidence": "Corroborate the scoped identity alert with session records and independently documented activity.",
+      "negative_control": "Approved service or administrator sessions.",
+      "limitations": "Authentication records alone cannot establish ticket theft or reuse.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1550/003/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-006",
+      "module": "KRB",
+      "title": "Kerberos preauthentication failures",
+      "mode": "evidence_review",
+      "event_ids": [
+        4771
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review failures by account and approved client baseline",
+      "positive_evidence": "Group DC failure records by scoped account and time; compare reported client and failure reason with support records.",
+      "negative_control": "Expired cached credentials or user password errors.",
+      "limitations": "Failures alone do not establish malicious intent or successful authentication.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-007",
+      "module": "KRB",
+      "title": "TGT request anomalies",
+      "mode": "evidence_review",
+      "event_ids": [
+        4768
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Compare account and source against historical authentication patterns",
+      "positive_evidence": "Compare observed TGT request identity, client and time with approved sign-in history and device inventory.",
+      "negative_control": "New workstation or scheduled service startup.",
+      "limitations": "A new client is not evidence of account compromise; schema varies by DC update.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-008",
+      "module": "KRB",
+      "title": "Service ticket failure anomalies",
+      "mode": "evidence_review",
+      "event_ids": [
+        4769
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review result codes and expected service activity",
+      "positive_evidence": "Review service-ticket failure status and service identity alongside outage or maintenance records.",
+      "negative_control": "Service rename, unavailable service or configuration error.",
+      "limitations": "A failed request does not establish successful service access.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-009",
+      "module": "KRB",
+      "title": "Ticket renewal anomalies",
+      "mode": "evidence_review",
+      "event_ids": [
+        4770
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Compare renewal activity with account usage policy",
+      "positive_evidence": "Compare renewal timestamps and identity with documented service session lifetimes.",
+      "negative_control": "Long-running approved applications and ordinary renewals.",
+      "limitations": "Renewal records do not establish ticket theft.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-010",
+      "module": "KRB",
+      "title": "Legacy ticket encryption visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4769
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review negotiated encryption with migration inventory",
+      "positive_evidence": "Compare recorded ticket encryption type with service inventory and approved migration exceptions.",
+      "negative_control": "Approved legacy application compatibility.",
+      "limitations": "Ticket encryption is not necessarily the session-key encryption; verify event version.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-011",
+      "module": "KRB",
+      "title": "TGT encryption policy visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4768
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Check ticket encryption fields against approved policy",
+      "positive_evidence": "Review TGT encryption fields from the actual event version against the effective authentication baseline.",
+      "negative_control": "Documented compatibility exceptions during migration.",
+      "limitations": "Advertised or supported types do not establish which encryption was negotiated.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-012",
+      "module": "KRB",
+      "title": "Service account ticket volume",
+      "mode": "evidence_review",
+      "event_ids": [
+        4769
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review service usage changes with owner context",
+      "positive_evidence": "Compare scoped service account ticket totals to its own business-hour and batch-job history.",
+      "negative_control": "Approved batch workload or deployment spike.",
+      "limitations": "Volume alone is not proof of malicious activity; incomplete DC collection biases counts.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-013",
+      "module": "KRB",
+      "title": "Privileged account Kerberos usage",
+      "mode": "evidence_review",
+      "event_ids": [
+        4768,
+        4769
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Compare privileged identities with approved administration inventory",
+      "positive_evidence": "Reconcile privileged account authentication records with approved admin workstations and change windows.",
+      "negative_control": "Documented emergency maintenance or delegated administration.",
+      "limitations": "Privilege membership and a ticket event do not prove privileged action.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-014",
+      "module": "KRB",
+      "title": "Dormant identity Kerberos activity",
+      "mode": "evidence_review",
+      "event_ids": [
+        4768,
+        4769
+      ],
+      "attack_candidate": "T1078.002",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Correlate sign-in activity with identity lifecycle records",
+      "positive_evidence": "Join the authentication record to the identity owner, lifecycle status and approved access record.",
+      "negative_control": "Reactivated employee, maintenance or break-glass account.",
+      "limitations": "Dormancy alone does not establish unauthorized use.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1078/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-015",
+      "module": "KRB",
+      "title": "Unexpected client authentication",
+      "mode": "evidence_review",
+      "event_ids": [
+        4768
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Compare source identity with registered devices",
+      "positive_evidence": "Reconcile client address at event time with device inventory, DHCP and approved remote access.",
+      "negative_control": "DHCP reassignment or approved VPN client.",
+      "limitations": "IP attribution can be ambiguous behind shared gateways.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-016",
+      "module": "KRB",
+      "title": "Service principal change",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review directory change audit against approved change tickets",
+      "positive_evidence": "Compare the audited SPN attribute change and object identity with before/after directory snapshots and owner approval.",
+      "negative_control": "Approved service migration or rename.",
+      "limitations": "An object-change record alone does not establish subsequent ticket activity.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-017",
+      "module": "KRB",
+      "title": "Preauthentication setting change",
+      "mode": "evidence_review",
+      "event_ids": [
+        4738,
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review account configuration changes with approval evidence",
+      "positive_evidence": "Compare relevant account policy before and after the reported change with the documented exception and owner.",
+      "negative_control": "Approved legacy authentication exception.",
+      "limitations": "A general user change event does not identify the precise setting without attributes or snapshots.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-018",
+      "module": "KRB",
+      "title": "Kerberos delegation setting change",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review delegation-related configuration changes against baseline",
+      "positive_evidence": "Compare audited service configuration attribute changes with approved delegation inventory.",
+      "negative_control": "Application onboarding or service migration.",
+      "limitations": "The event establishes a configuration observation, not actual delegated authentication.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-019",
+      "module": "KRB",
+      "title": "Kerberos event ingestion completeness",
+      "mode": "evidence_review",
+      "event_ids": [
+        4768,
+        4769,
+        4771
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Compare collector records with authoritative DC event export",
+      "positive_evidence": "Compare equivalent bounded DC exports and collector records by source, record identifier and time after ingestion delay.",
+      "negative_control": "Collector maintenance or expected forwarding filters.",
+      "limitations": "Incomplete retention prevents a reliable missing-event conclusion; event IDs alone do not identify unique records.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-KRB-020",
+      "module": "KRB",
+      "title": "Kerberos policy baseline",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity sensor",
+      "prerequisites": "Audit Kerberos Authentication Service and Service Ticket Operations; collect all relevant DCs",
+      "detection_hypothesis": "Review effective ticket and encryption policies with administrator-provided snapshot",
+      "positive_evidence": "Review effective domain Kerberos policy and approved compatibility exceptions with the domain owner.",
+      "negative_control": "Documented compatibility setting with expiry and owner.",
+      "limitations": "A policy snapshot is not a runtime authentication or detection test.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-001",
+      "module": "NTL",
+      "title": "NTLM successful validation",
+      "mode": "evidence_review",
+      "event_ids": [
+        4776
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Review approved legacy authentication baseline",
+      "positive_evidence": "Review successful credential validation status on the authoritative source and reconcile the account with approved legacy inventory.",
+      "negative_control": "Routine legacy application authentication.",
+      "limitations": "Credential validation is not proof of a specific destination session.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-002",
+      "module": "NTL",
+      "title": "NTLM failed validation",
+      "mode": "evidence_review",
+      "event_ids": [
+        4776
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Review failure patterns with helpdesk context",
+      "positive_evidence": "Review failure status, reported workstation and account against support tickets and time window.",
+      "negative_control": "Expired service password or user typing error.",
+      "limitations": "Failures alone do not establish malicious attempts or a subsequent success.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-003",
+      "module": "NTL",
+      "title": "NTLM network logon",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Review authentication package and source inventory",
+      "positive_evidence": "Confirm the authentication package and logon type in destination-host records; compare with approved client inventory.",
+      "negative_control": "Routine file-share or service access.",
+      "limitations": "A network logon does not establish which business operation occurred.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-004",
+      "module": "NTL",
+      "title": "Pass-the-hash suspicion",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624,
+        4776
+      ],
+      "attack_candidate": "T1550.002",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Correlate endpoint and DC evidence with identity sensor findings; not proof of hash use",
+      "positive_evidence": "Correlate endpoint and identity alerts with scoped authentication records and independent incident evidence.",
+      "negative_control": "Approved legacy authentication and remote administration.",
+      "limitations": "NTLM event presence cannot distinguish password-based logon from credential-material misuse.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1550/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-005",
+      "module": "NTL",
+      "title": "NTLM password spray suspicion",
+      "mode": "evidence_review",
+      "event_ids": [
+        4625,
+        4776
+      ],
+      "attack_candidate": "T1110.003",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Review account-distributed failures against known service disruptions",
+      "positive_evidence": "Review aggregate failed authentication records, scoped identity set, source health and service ownership.",
+      "negative_control": "Expired service credentials, misconfigured clients and legitimate user failures.",
+      "limitations": "Authentication failures do not identify the attempted secret or prove a spraying campaign.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1110/003/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-006",
+      "module": "NTL",
+      "title": "NTLM privileged account use",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624,
+        4776
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Review privileged authentication against tier policy",
+      "positive_evidence": "Correlate privileged identity inventory with approved administration records and destination logon evidence.",
+      "negative_control": "Authorized legacy administration exception.",
+      "limitations": "Validation events alone cannot establish privilege use at a destination.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-007",
+      "module": "NTL",
+      "title": "NTLM service account use",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624,
+        4776
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Compare observed service identities with registered owners",
+      "positive_evidence": "Reconcile service account usage with documented application ownership and expected host relationships.",
+      "negative_control": "Scheduled batch job or application restart.",
+      "limitations": "Shared service identity may limit attribution to a specific application.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-008",
+      "module": "NTL",
+      "title": "NTLM workstation mismatch",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624,
+        4776
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Compare source identity and asset records with DHCP context",
+      "positive_evidence": "Resolve reported workstation and source-address context against time-valid inventory.",
+      "negative_control": "Renamed workstation, DHCP change or remote access gateway.",
+      "limitations": "Reported workstation fields are not independent device identity proof.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-009",
+      "module": "NTL",
+      "title": "NTLM audit policy review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Review effective NTLM audit settings and coverage",
+      "positive_evidence": "Review effective NTLM auditing settings and a source-by-source collection inventory against the approved baseline.",
+      "negative_control": "Documented temporary policy exception.",
+      "limitations": "Policy snapshots do not prove actual event delivery; check separate telemetry evidence.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-010",
+      "module": "NTL",
+      "title": "NTLM restriction policy review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Review approved legacy exceptions and effective restriction settings",
+      "positive_evidence": "Compare effective NTLM restriction policies with the approved legacy-service register and exception owner.",
+      "negative_control": "Documented staged migration or temporary compatibility exception.",
+      "limitations": "Configured policy does not establish enforcement on every host.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-011",
+      "module": "NTL",
+      "title": "NTLM relay suspicion",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624,
+        4776
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Review identity sensor findings with server authentication context; events alone do not establish relay",
+      "positive_evidence": "Review the existing identity-sensor finding and corroborating server authentication evidence with the incident timeline.",
+      "negative_control": "Routine integrated authentication or approved proxy architecture.",
+      "limitations": "Authentication records cannot independently establish relay; require qualified corroboration.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-NTL-012",
+      "module": "NTL",
+      "title": "NTLM channel visibility",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC and endpoint Security; NTLM Operational",
+      "prerequisites": "Enable Credential Validation and Logon auditing; verify NTLM operational collection",
+      "detection_hypothesis": "Review collector health and source availability for NTLM operational events",
+      "positive_evidence": "Compare NTLM operational channel availability and collector configuration across in-scope hosts.",
+      "negative_control": "Planned collector maintenance or approved channel filtering.",
+      "limitations": "Configured collection does not prove end-to-end delivery.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LDAP-001",
+      "module": "LDAP",
+      "title": "LDAP unsigned bind audit",
+      "mode": "evidence_review",
+      "event_ids": [
+        2889
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Directory Service; DC Security; identity sensor",
+      "prerequisites": "Verify diagnostic logging and directory auditing where applicable",
+      "detection_hypothesis": "Review unsigned bind audit evidence and known legacy clients",
+      "positive_evidence": "Relevant DC Directory Service records identifying a client where the required diagnostic logging is enabled; verify client ownership and bind policy.",
+      "negative_control": "Approved signed or protected LDAP client sessions with an independently verified configuration.",
+      "limitations": "Diagnostic logging is not necessarily enabled and event absence cannot establish secure binds.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LDAP-002",
+      "module": "LDAP",
+      "title": "LDAP signing posture",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Directory Service; DC Security; identity sensor",
+      "prerequisites": "Verify diagnostic logging and directory auditing where applicable",
+      "detection_hypothesis": "Review effective DC LDAP signing policy",
+      "positive_evidence": "Review effective LDAP signing configuration from approved domain-controller inventory and change records.",
+      "negative_control": "Approved time-limited compatibility exception.",
+      "limitations": "A snapshot does not prove all client connections are compliant.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LDAP-003",
+      "module": "LDAP",
+      "title": "LDAP channel binding posture",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Directory Service; DC Security; identity sensor",
+      "prerequisites": "Verify diagnostic logging and directory auditing where applicable",
+      "detection_hypothesis": "Review effective channel binding policy and compatibility exceptions",
+      "positive_evidence": "Review effective channel-binding policy and documented client compatibility exceptions.",
+      "negative_control": "Approved temporary exception during migration.",
+      "limitations": "Configuration is not evidence of runtime enforcement.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LDAP-004",
+      "module": "LDAP",
+      "title": "LDAP channel binding warning",
+      "mode": "evidence_review",
+      "event_ids": [
+        3039
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Directory Service; DC Security; identity sensor",
+      "prerequisites": "Verify diagnostic logging and directory auditing where applicable",
+      "detection_hypothesis": "Review channel binding audit diagnostics with client inventory",
+      "positive_evidence": "Review Directory Service channel diagnostics and effective channel-binding policy; reconcile affected client with owner.",
+      "negative_control": "Approved compatibility remediation in progress.",
+      "limitations": "3039 is policy and diagnostic dependent; absence is not assurance of successful enforcement.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/ldap-channel-binding"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LDAP-005",
+      "module": "LDAP",
+      "title": "LDAP account discovery suspicion",
+      "mode": "evidence_review",
+      "event_ids": [
+        1644
+      ],
+      "attack_candidate": "T1087.002",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "Directory Service; DC Security; identity sensor",
+      "prerequisites": "Verify diagnostic logging and directory auditing where applicable",
+      "detection_hypothesis": "Review directory query activity with diagnostic logging and approved administration baselines",
+      "positive_evidence": "Review directory diagnostic records with approved client inventory and the documented purpose of directory activity.",
+      "negative_control": "Identity inventory, address book synchronization and administration.",
+      "limitations": "Event 1644 is selective diagnostic logging, not comprehensive directory query coverage.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1087/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LDAP-006",
+      "module": "LDAP",
+      "title": "LDAP group discovery suspicion",
+      "mode": "evidence_review",
+      "event_ids": [
+        1644
+      ],
+      "attack_candidate": "T1069.002",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "Directory Service; DC Security; identity sensor",
+      "prerequisites": "Verify diagnostic logging and directory auditing where applicable",
+      "detection_hypothesis": "Review group query activity with legitimate application baselines",
+      "positive_evidence": "Compare directory diagnostic records about group lookup with known inventory jobs and client ownership.",
+      "negative_control": "Access reviews, authorization lookups and IAM synchronization.",
+      "limitations": "A lookup alone is not hostile reconnaissance; absence may reflect diagnostic settings.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1069/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LDAP-007",
+      "module": "LDAP",
+      "title": "LDAP search performance audit",
+      "mode": "evidence_review",
+      "event_ids": [
+        1644
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Directory Service; DC Security; identity sensor",
+      "prerequisites": "Verify diagnostic logging and directory auditing where applicable",
+      "detection_hypothesis": "Review expensive search diagnostics with application owners",
+      "positive_evidence": "Review directory search diagnostics with application owners and approved workload context.",
+      "negative_control": "Legitimate reporting or inventory application.",
+      "limitations": "Diagnostic selection and thresholds affect visibility; expensive searches do not establish hostile activity.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LDAP-008",
+      "module": "LDAP",
+      "title": "LDAP sensitive object access",
+      "mode": "evidence_review",
+      "event_ids": [
+        4662
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Directory Service; DC Security; identity sensor",
+      "prerequisites": "Verify diagnostic logging and directory auditing where applicable",
+      "detection_hypothesis": "Review audited object access with directory ownership records",
+      "positive_evidence": "Review audited object identity, access context and authorized role against the sensitive-object inventory.",
+      "negative_control": "Routine directory administration or access review.",
+      "limitations": "Access auditing depends on audit policy and applicable SACL; record alone does not establish harmful use.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LDAP-009",
+      "module": "LDAP",
+      "title": "LDAP directory change visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Directory Service; DC Security; identity sensor",
+      "prerequisites": "Verify diagnostic logging and directory auditing where applicable",
+      "detection_hypothesis": "Confirm object modification records reach collection pipeline",
+      "positive_evidence": "Compare a bounded authoritative object-change export with collector records and change ticket.",
+      "negative_control": "Approved directory maintenance.",
+      "limitations": "A forwarded event does not establish complete directory-change coverage.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LDAP-010",
+      "module": "LDAP",
+      "title": "LDAP diagnostic coverage",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Directory Service; DC Security; identity sensor",
+      "prerequisites": "Verify diagnostic logging and directory auditing where applicable",
+      "detection_hypothesis": "Review DC diagnostic level and collector availability without changing settings",
+      "positive_evidence": "Compare effective LDAP diagnostic configuration, channels and collector health against approved monitoring requirements.",
+      "negative_control": "Approved diagnostic reduction for resource management.",
+      "limitations": "Configuration review cannot prove delivery or enforcement.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-001",
+      "module": "PKI",
+      "title": "Certificate request visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4886
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review request identity, template and CA records",
+      "positive_evidence": "Reconcile CA request records with request identity, issuance workflow and approved template inventory.",
+      "negative_control": "Ordinary certificate enrollment or renewal.",
+      "limitations": "A request event does not establish issuance or subsequent certificate use.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-002",
+      "module": "PKI",
+      "title": "Certificate issuance visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4887
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Correlate issuance with approved enrollment inventory",
+      "positive_evidence": "CA-issued certificate event correlated to request ID, approved template and certificate inventory; compare with the authorized enrollment record.",
+      "negative_control": "Routine approved certificate renewal and auto-enrollment.",
+      "limitations": "Certificate issuance alone does not prove certificate misuse or authentication.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-003",
+      "module": "PKI",
+      "title": "Certificate request denial",
+      "mode": "evidence_review",
+      "event_ids": [
+        4888
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review denied requests with enrollment support context",
+      "positive_evidence": "Review denied-request record and disposition against enrollment policy and support records.",
+      "negative_control": "Expired approval or ordinary enrollment failure.",
+      "limitations": "Denial of one request does not prove all related requests were denied.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-004",
+      "module": "PKI",
+      "title": "Certificate revocation activity",
+      "mode": "evidence_review",
+      "event_ids": [
+        4870
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review revocations against approved lifecycle actions",
+      "positive_evidence": "Reconcile revocation record with certificate inventory and lifecycle ticket.",
+      "negative_control": "Routine decommissioning or approved replacement.",
+      "limitations": "Revocation event does not establish client-side revocation enforcement.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-005",
+      "module": "PKI",
+      "title": "CA permission change",
+      "mode": "evidence_review",
+      "event_ids": [
+        4882
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review CA security changes with change approvals",
+      "positive_evidence": "Compare CA security changes with before/after access review and approved change ticket.",
+      "negative_control": "Authorized PKI role rotation.",
+      "limitations": "Event presence does not establish effective permissions after inheritance or subsequent changes.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-006",
+      "module": "PKI",
+      "title": "CA configuration change",
+      "mode": "evidence_review",
+      "event_ids": [
+        4890,
+        4891
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review CA configuration events with PKI administrator baseline",
+      "positive_evidence": "Compare CA configuration snapshot and audited change context to the approved maintenance record.",
+      "negative_control": "CA upgrade or approved property change.",
+      "limitations": "4890 and 4891 describe different configuration changes; inspect actual record rather than treating them as interchangeable.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-007",
+      "module": "PKI",
+      "title": "Certificate manager settings change",
+      "mode": "evidence_review",
+      "event_ids": [
+        4890
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review certificate manager configuration with approval records",
+      "positive_evidence": "Compare certificate manager settings before and after the event with approved role policy.",
+      "negative_control": "Planned PKI responsibility reassignment.",
+      "limitations": "Settings-change telemetry does not establish issuance or use of certificates.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-008",
+      "module": "PKI",
+      "title": "Certificate template load visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4898
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review template loading against CA inventory",
+      "positive_evidence": "Reconcile CA template-load record with approved CA template inventory.",
+      "negative_control": "Normal service startup or template refresh.",
+      "limitations": "A loaded template does not establish its effective permissions or issuance.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-009",
+      "module": "PKI",
+      "title": "Certificate template update visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4899
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review template changes against change records",
+      "positive_evidence": "Compare template versions and approved change records with CA template-update observation.",
+      "negative_control": "Approved certificate policy rollout.",
+      "limitations": "CA-side update observation does not establish complete directory-side change history.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-010",
+      "module": "PKI",
+      "title": "Certificate template permissions update",
+      "mode": "evidence_review",
+      "event_ids": [
+        4900
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review template security change against approval and owner records",
+      "positive_evidence": "Review template security change evidence alongside authoritative security descriptor and owner approval.",
+      "negative_control": "Approved delegation change.",
+      "limitations": "Effective permissions require separate review; an event alone does not establish misuse.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-011",
+      "module": "PKI",
+      "title": "Enrollment permission review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review authorized template enrollment principals with PKI owners",
+      "positive_evidence": "Review authorized certificate template enrollment ACL inventory and owner-approved enrollment groups.",
+      "negative_control": "Documented enrollment role granted for a valid business requirement.",
+      "limitations": "Effective rights depend on nested membership and CA/template settings.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates",
+        "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/audit-certification-services"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-012",
+      "module": "PKI",
+      "title": "Template identity binding review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review certificate identity binding policy and template risk assessment",
+      "positive_evidence": "Review template identity-binding policy, approved certificate use and change history.",
+      "negative_control": "An approved purpose-specific identity enrollment workflow.",
+      "limitations": "Template settings alone do not establish credential compromise.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates",
+        "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/audit-certification-services"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-013",
+      "module": "PKI",
+      "title": "Template purpose review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review authentication-capable template purposes with business requirements",
+      "positive_evidence": "Compare template application purposes with approved certificate use cases and documented owners.",
+      "negative_control": "Authorized application-specific authentication template.",
+      "limitations": "Purpose configuration alone does not establish exploitability or issuance.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-014",
+      "module": "PKI",
+      "title": "Template approval review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review manager approval and issuance policy against requirements",
+      "positive_evidence": "Review effective approval requirements and documented exceptions for the scoped templates.",
+      "negative_control": "Approved unattended enrollment workflow.",
+      "limitations": "Approval settings do not prove actual enforcement for every request.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-015",
+      "module": "PKI",
+      "title": "Enrollment agent governance",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review enrollment agent permissions and restrictions with PKI owners",
+      "positive_evidence": "Reconcile authorized enrollment-agent roles and restrictions with documented certificate workflows.",
+      "negative_control": "Approved enrollment service performing its assigned role.",
+      "limitations": "Inventory alone does not prove issuance controls are effective.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-016",
+      "module": "PKI",
+      "title": "CA administrator governance",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review administrative role separation and access reviews",
+      "positive_evidence": "Compare CA administrator and certificate manager role inventory with separation-of-duties requirements.",
+      "negative_control": "Approved temporary break-glass assignment.",
+      "limitations": "Role membership does not prove use or misuse of that role.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-017",
+      "module": "PKI",
+      "title": "CA endpoint protection review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review enrollment endpoint authentication protections and transport policy",
+      "positive_evidence": "Review approved enrollment endpoint inventory and effective transport/authentication policy records.",
+      "negative_control": "Documented legacy endpoint migration exception.",
+      "limitations": "A configuration snapshot is not proof of runtime enforcement or exploitability.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-018",
+      "module": "PKI",
+      "title": "Certificate mapping policy review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review effective certificate mapping and strong binding posture",
+      "positive_evidence": "Review effective certificate mapping policy and documented compatibility exceptions against vendor guidance.",
+      "negative_control": "Approved certificate migration in progress.",
+      "limitations": "Effective policy must be verified per relevant DC; configuration alone does not establish misuse.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-019",
+      "module": "PKI",
+      "title": "Unusual certificate authentication",
+      "mode": "evidence_review",
+      "event_ids": [
+        4768
+      ],
+      "attack_candidate": "T1649",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review certificate-backed authentication with CA and identity sensor evidence",
+      "positive_evidence": "Review certificate-related authentication evidence alongside CA issuance history, owner and approved certificate lifecycle.",
+      "negative_control": "Smart-card logon, normal renewal and certificate-based service authentication.",
+      "limitations": "Unusual authentication does not establish certificate theft or forgery.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates",
+        "https://attack.mitre.org/techniques/T1649/",
+        "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/audit-certification-services"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PKI-020",
+      "module": "PKI",
+      "title": "PKI audit coverage",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "CA Security; DC Security; PKI inventory",
+      "prerequisites": "Enable Certification Services auditing and collect authorized CA inventory",
+      "detection_hypothesis": "Review CA audit policy and collection completeness with known source inventory",
+      "positive_evidence": "Reconcile enabled CA audit categories and source inventory against approved collection requirements.",
+      "negative_control": "Scheduled collector outage or documented filtering.",
+      "limitations": "Audit settings do not independently prove event completeness.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-001",
+      "module": "DEL",
+      "title": "Unconstrained delegation inventory",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Review approved delegation inventory against tier boundaries",
+      "positive_evidence": "Review approved account inventory and documented delegation relationships with service owners.",
+      "negative_control": "Legacy service with a reviewed, time-limited exception.",
+      "limitations": "Configuration posture alone does not establish delegation misuse.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-002",
+      "module": "DEL",
+      "title": "Constrained delegation inventory",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Review permitted service relationships against application ownership",
+      "positive_evidence": "Compare service relationship inventory with approved application dependency records and owners.",
+      "negative_control": "Approved service-to-service integration.",
+      "limitations": "Configured relationship is not proof of actual use or exploitation.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-003",
+      "module": "DEL",
+      "title": "Resource-based delegation inventory",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Review authorized delegation principals and resource ownership",
+      "positive_evidence": "Review the authorized directory snapshot against approved service relationships and ownership.",
+      "negative_control": "Documented service provisioning and approved delegation.",
+      "limitations": "Effective relationships require identity and permission context.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-004",
+      "module": "DEL",
+      "title": "Delegation change on computer object",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Review computer object changes with delegation baseline",
+      "positive_evidence": "Scoped directory change record and before/after directory snapshot; compare changed property and object identity against approved change record.",
+      "negative_control": "Authorized delegation maintenance on a disposable lab object.",
+      "limitations": "Directory change logging depends on SACL and audit policy; change alone is not compromise.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-005",
+      "module": "DEL",
+      "title": "Delegation change on service identity",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Review service identity changes with change tickets",
+      "positive_evidence": "Compare service identity changes with before/after approved service configuration and change ticket.",
+      "negative_control": "Application deployment or service migration.",
+      "limitations": "Object modification alone does not establish a delegated session.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-006",
+      "module": "DEL",
+      "title": "Delegation change on privileged identity",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Review changes affecting privileged identity controls",
+      "positive_evidence": "Compare protected identity settings and ownership before/after the change with privileged-access approval.",
+      "negative_control": "Approved privileged account maintenance.",
+      "limitations": "Change event does not establish subsequent privilege use.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-007",
+      "module": "DEL",
+      "title": "Sensitive account delegation protection",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Review protected identity settings against tier requirements",
+      "positive_evidence": "Review documented sensitive identities and effective delegation protection settings against approved tier policy.",
+      "negative_control": "Documented temporary application compatibility exception.",
+      "limitations": "Configuration alone does not establish runtime enforcement.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-008",
+      "module": "DEL",
+      "title": "Delegation service relationship drift",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Compare snapshots of approved service relationships",
+      "positive_evidence": "Compare dated service relationship inventories and reconcile changes with owner-approved dependency updates.",
+      "negative_control": "Approved migration or service retirement.",
+      "limitations": "Snapshots may omit intermediate changes; drift is not evidence of exploitation.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-009",
+      "module": "DEL",
+      "title": "Delegation principal lifecycle",
+      "mode": "evidence_review",
+      "event_ids": [
+        4726,
+        4743,
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Review identity deletion and delegation inventory consistency",
+      "positive_evidence": "Reconcile account removal events and remaining approved service relationships using stable object identities.",
+      "negative_control": "Normal decommissioning or service replacement.",
+      "limitations": "Deletion records alone do not prove all related permissions were removed.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-010",
+      "module": "DEL",
+      "title": "Delegated authentication anomalies",
+      "mode": "evidence_review",
+      "event_ids": [
+        4769
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Review service authentication context with identity sensor evidence",
+      "positive_evidence": "Review existing identity-sensor alert and scoped service authentication records against known service relationships.",
+      "negative_control": "Routine approved delegated service operation.",
+      "limitations": "Service-ticket telemetry alone cannot establish abusive delegation.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-011",
+      "module": "DEL",
+      "title": "Delegation audit scope",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Review SACL and collection coverage for critical objects",
+      "positive_evidence": "Review applicable SACLs, audit policy and collector source inventory for designated critical objects.",
+      "negative_control": "Approved audit scope exception or maintenance.",
+      "limitations": "Configuration coverage is not event delivery or detection coverage.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DEL-012",
+      "module": "DEL",
+      "title": "Delegation approval reconciliation",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; directory inventory; identity sensor",
+      "prerequisites": "Collect directory change auditing and authorized delegation configuration snapshot",
+      "detection_hypothesis": "Review current delegation inventory against approved change records",
+      "positive_evidence": "Reconcile effective service relationship inventory with approved owner, ticket and review date.",
+      "negative_control": "Approved recently changed relationship awaiting inventory refresh.",
+      "limitations": "A missing ticket may indicate documentation lag; not proof of abuse.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-001",
+      "module": "ACL",
+      "title": "Domain root ACL drift",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review ACL changes with authoritative baseline",
+      "positive_evidence": "Domain root security descriptor snapshots from approved read-only exports; identify a material permission difference and reconcile with change records.",
+      "negative_control": "Approved permission maintenance with documented baseline and owner.",
+      "limitations": "A changed descriptor is not proof that the permission was used.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-002",
+      "module": "ACL",
+      "title": "Privileged group ACL drift",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review group ACL changes against approved administrators",
+      "positive_evidence": "Compare privileged group security descriptors before and after the scoped directory change against approved role assignments.",
+      "negative_control": "Authorized delegated administration change.",
+      "limitations": "General object change does not prove effective permission or group membership changed.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-003",
+      "module": "ACL",
+      "title": "OU ACL drift",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review organizational unit access changes with owner context",
+      "positive_evidence": "Review scoped OU permission snapshots and inheritance alongside change approval.",
+      "negative_control": "Approved organizational restructuring.",
+      "limitations": "Inherited effects require separate evaluation; event alone does not prove access.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-004",
+      "module": "ACL",
+      "title": "Service account ACL drift",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review service identity ACL changes against ownership policy",
+      "positive_evidence": "Compare service account object permissions with ownership and application support role inventory.",
+      "negative_control": "Approved service owner transition.",
+      "limitations": "Configuration change does not prove that the permission was exercised.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-005",
+      "module": "ACL",
+      "title": "Computer object ACL drift",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review computer object permission changes with owner context",
+      "positive_evidence": "Compare computer-object permissions and inheritance with approved device management roles.",
+      "negative_control": "Approved device enrollment or administrative transfer.",
+      "limitations": "Object ACL change does not establish host-level compromise.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-006",
+      "module": "ACL",
+      "title": "AdminSDHolder ACL review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review protected-object security descriptor baseline",
+      "positive_evidence": "Compare AdminSDHolder ACL snapshots and approved privileged-role design with directory change records.",
+      "negative_control": "Approved privileged administration model.",
+      "limitations": "A snapshot alone cannot show runtime access or prove abuse.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-007",
+      "module": "ACL",
+      "title": "Directory owner change",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136,
+        4670
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review available security descriptor changes and approved ownership records",
+      "positive_evidence": "Compare ownership records and security descriptor snapshots with approved ownership transfer; confirm event provider and object type.",
+      "negative_control": "Approved ownership recovery or administrative change.",
+      "limitations": "4670 may concern non-directory objects; require actual object context and appropriate source.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-008",
+      "module": "ACL",
+      "title": "Inherited permission review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review effective permissions and inheritance with directory administrators",
+      "positive_evidence": "Review effective inherited permissions on scoped objects against parent policy and authorized role inventory.",
+      "negative_control": "Approved OU-level delegation.",
+      "limitations": "Descriptor snapshot is not evidence of effective access for every identity without group context.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-009",
+      "module": "ACL",
+      "title": "Replication permission review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review authorized replication-related permissions against approved services",
+      "positive_evidence": "Review effective directory replication permissions against the authorized replication and synchronization inventory.",
+      "negative_control": "Approved domain controllers and directory synchronization accounts.",
+      "limitations": "Assigned rights do not prove that replication activity occurred.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-010",
+      "module": "ACL",
+      "title": "Password reset delegation review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review delegated account management roles against support requirements",
+      "positive_evidence": "Review delegated account-support roles and approved reset permissions against organizational scope.",
+      "negative_control": "Approved help desk duties.",
+      "limitations": "Permission existence is not evidence that any password was reset.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-011",
+      "module": "ACL",
+      "title": "Group management delegation review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review authorized group management roles and owners",
+      "positive_evidence": "Compare group-management delegation and owner approvals with actual group scope and effective roles.",
+      "negative_control": "Approved group-owner delegation.",
+      "limitations": "Rights inventory alone does not show that membership was changed.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-012",
+      "module": "ACL",
+      "title": "GPO object ACL review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review policy object permissions against change governance",
+      "positive_evidence": "Review policy-object and associated file-side permissions against approved policy administration roles.",
+      "negative_control": "Approved policy management delegation.",
+      "limitations": "Directory-side ACL alone is insufficient to evaluate the complete policy object.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-013",
+      "module": "ACL",
+      "title": "Certificate template ACL review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review template security descriptors with PKI administrators",
+      "positive_evidence": "Compare certificate-template effective access and inheritance with approved PKI ownership and enrollment policy.",
+      "negative_control": "Authorized enrollment or template maintenance.",
+      "limitations": "Template ACL posture is not proof of certificate issuance or misuse.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-014",
+      "module": "ACL",
+      "title": "Unexpected directory access",
+      "mode": "evidence_review",
+      "event_ids": [
+        4662
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review audited access in context of object sensitivity and authorized actors",
+      "positive_evidence": "Review access event object identity and approved actor role alongside effective audit coverage.",
+      "negative_control": "Routine administrative read or inventory job.",
+      "limitations": "Audit record alone does not establish sensitive data disclosure or malicious intent.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-ACL-015",
+      "module": "ACL",
+      "title": "Directory SACL coverage",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; authorized ACL snapshots",
+      "prerequisites": "Collect Directory Service Access and Changes; verify relevant SACLs",
+      "detection_hypothesis": "Review audit coverage for protected objects and sensitive changes",
+      "positive_evidence": "Compare protected-object SACL configuration and collection sources against defined audit requirements.",
+      "negative_control": "Approved targeted auditing to reduce noise.",
+      "limitations": "A SACL snapshot cannot establish delivery, completeness or alert behavior.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DC-001",
+      "module": "DC",
+      "title": "DCSync suspicion",
+      "mode": "evidence_review",
+      "event_ids": [
+        4662
+      ],
+      "attack_candidate": "T1003.006",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; Directory Service; EDR",
+      "prerequisites": "Collect DC audit logs and identity sensor findings; verify relevant SACLs",
+      "detection_hypothesis": "Review replication-related identity sensor alerts and audited directory access with approved replication inventory",
+      "positive_evidence": "Review identity sensor findings with directory access auditing, known replication roles and approved synchronization records.",
+      "negative_control": "Authorized domain replication and directory synchronization services.",
+      "limitations": "A generic directory-access event is insufficient to demonstrate credential extraction.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1003/006/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DC-002",
+      "module": "DC",
+      "title": "Directory database access suspicion",
+      "mode": "evidence_review",
+      "event_ids": [
+        4663
+      ],
+      "attack_candidate": "T1003.003",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; Directory Service; EDR",
+      "prerequisites": "Collect DC audit logs and identity sensor findings; verify relevant SACLs",
+      "detection_hypothesis": "Review EDR findings and audited sensitive file access with backup context",
+      "positive_evidence": "Review authorized endpoint file-access evidence alongside backup inventory, process ownership and documented operations.",
+      "negative_control": "Domain controller backup, restoration or approved maintenance.",
+      "limitations": "File-access events depend on audit policy and do not establish credential extraction.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1003/003/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DC-003",
+      "module": "DC",
+      "title": "Domain controller computer creation",
+      "mode": "evidence_review",
+      "event_ids": [
+        4741
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; Directory Service; EDR",
+      "prerequisites": "Collect DC audit logs and identity sensor findings; verify relevant SACLs",
+      "detection_hypothesis": "Review new computer objects against approved DC lifecycle",
+      "positive_evidence": "Reconcile computer creation record with approved DC deployment inventory and subsequent role verification.",
+      "negative_control": "Approved server provisioning.",
+      "limitations": "4741 is a computer-account creation event, not proof the system became a DC.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DC-004",
+      "module": "DC",
+      "title": "Domain controller computer changes",
+      "mode": "evidence_review",
+      "event_ids": [
+        4742
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; Directory Service; EDR",
+      "prerequisites": "Collect DC audit logs and identity sensor findings; verify relevant SACLs",
+      "detection_hypothesis": "Review computer account changes against approved maintenance",
+      "positive_evidence": "Compare computer account changes and DC maintenance record with authoritative role inventory.",
+      "negative_control": "Approved DC maintenance or machine account update.",
+      "limitations": "4742 alone does not establish a change in DC role or replication behavior.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DC-005",
+      "module": "DC",
+      "title": "Replication destination review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; Directory Service; EDR",
+      "prerequisites": "Collect DC audit logs and identity sensor findings; verify relevant SACLs",
+      "detection_hypothesis": "Review authorized replication topology and endpoint ownership",
+      "positive_evidence": "Compare authorized replication topology and destination ownership with dated infrastructure inventory.",
+      "negative_control": "Approved DC addition or site migration.",
+      "limitations": "Topology review is not proof of actual replication traffic or misuse.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DC-006",
+      "module": "DC",
+      "title": "Replica source naming context established",
+      "mode": "evidence_review",
+      "event_ids": [
+        4928
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; Directory Service; EDR",
+      "prerequisites": "Collect DC audit logs and identity sensor findings; verify relevant SACLs",
+      "detection_hypothesis": "Review the audited replica source naming-context change against approved topology records",
+      "positive_evidence": "Reconcile replica source naming-context establishment with approved topology and maintenance records.",
+      "negative_control": "Normal DC promotion or topology convergence.",
+      "limitations": "4928 refers to a replica source naming context, not independently to a connection-object creation or malicious replication.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DC-007",
+      "module": "DC",
+      "title": "Replica source naming context removed",
+      "mode": "evidence_review",
+      "event_ids": [
+        4929
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; Directory Service; EDR",
+      "prerequisites": "Collect DC audit logs and identity sensor findings; verify relevant SACLs",
+      "detection_hypothesis": "Review the audited replica source naming-context change against approved topology records",
+      "positive_evidence": "Reconcile replica source naming-context removal with approved topology and decommissioning records.",
+      "negative_control": "Normal topology adjustment or DC removal.",
+      "limitations": "4929 refers to a replica source naming context, not independently to a connection-object removal.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DC-008",
+      "module": "DC",
+      "title": "Directory backup governance",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; Directory Service; EDR",
+      "prerequisites": "Collect DC audit logs and identity sensor findings; verify relevant SACLs",
+      "detection_hypothesis": "Review approved backup identities and access boundaries",
+      "positive_evidence": "Review backup identity inventory and approved access scope against documented recovery requirements.",
+      "negative_control": "Approved directory backup or restore service.",
+      "limitations": "Role assignment alone does not establish backup contents or use.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DC-009",
+      "module": "DC",
+      "title": "DC privileged session activity",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624,
+        4672
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; Directory Service; EDR",
+      "prerequisites": "Collect DC audit logs and identity sensor findings; verify relevant SACLs",
+      "detection_hypothesis": "Review privileged sessions against dedicated admin workflows",
+      "positive_evidence": "Review DC destination logon and special-privilege records in the same host/session context against approved admin records.",
+      "negative_control": "Approved maintenance or service logon.",
+      "limitations": "Special privileges assigned at logon do not prove they were exercised.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-DC-010",
+      "module": "DC",
+      "title": "DC audit source completeness",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; Directory Service; EDR",
+      "prerequisites": "Collect DC audit logs and identity sensor findings; verify relevant SACLs",
+      "detection_hypothesis": "Review DC inventory, sensor health and log coverage",
+      "positive_evidence": "Compare the approved domain-controller inventory with each expected source heartbeat and retention record.",
+      "negative_control": "Documented maintenance outage and approved collector replacement.",
+      "limitations": "Incomplete coverage makes negative detection claims inconclusive.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-GPO-001",
+      "module": "GPO",
+      "title": "GPO object creation",
+      "mode": "evidence_review",
+      "event_ids": [
+        5137
+      ],
+      "attack_candidate": "T1484.001",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "DC Security; endpoint Security; SYSVOL audit",
+      "prerequisites": "Collect directory changes and relevant file share auditing; obtain authorized GPO snapshots",
+      "detection_hypothesis": "Review newly created policy objects and approval records",
+      "positive_evidence": "Correlate the policy object creation record with its owner, scope and approved change ticket.",
+      "negative_control": "Creation of an approved new policy.",
+      "limitations": "Object creation alone establishes neither policy application nor malicious modification.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1484/001/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-GPO-002",
+      "module": "GPO",
+      "title": "GPO object modification",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": "T1484.001",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; endpoint Security; SYSVOL audit",
+      "prerequisites": "Collect directory changes and relevant file share auditing; obtain authorized GPO snapshots",
+      "detection_hypothesis": "Review policy metadata change and approved change request",
+      "positive_evidence": "Review before/after policy snapshots and the recorded change authorization for the same object.",
+      "negative_control": "Routine policy rollout or approved security hardening.",
+      "limitations": "A directory update alone does not prove harmful policy effects.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1484/001/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-GPO-003",
+      "module": "GPO",
+      "title": "GPO object deletion",
+      "mode": "evidence_review",
+      "event_ids": [
+        5141
+      ],
+      "attack_candidate": "T1484.001",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "DC Security; endpoint Security; SYSVOL audit",
+      "prerequisites": "Collect directory changes and relevant file share auditing; obtain authorized GPO snapshots",
+      "detection_hypothesis": "Review deleted policy objects and change records",
+      "positive_evidence": "Review deleted policy identity, prior linked scope, approval record and restoration requirements.",
+      "negative_control": "Planned retirement of a superseded policy.",
+      "limitations": "Deletion alone does not establish malicious activity or resulting host configuration.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1484/001/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-GPO-004",
+      "module": "GPO",
+      "title": "GPO link changes",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": "T1484.001",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "DC Security; endpoint Security; SYSVOL audit",
+      "prerequisites": "Collect directory changes and relevant file share auditing; obtain authorized GPO snapshots",
+      "detection_hypothesis": "Review policy link changes and authorized scope",
+      "positive_evidence": "Compare approved link scope and before/after policy relationships with the corresponding change ticket.",
+      "negative_control": "OU reorganization and planned policy rollout.",
+      "limitations": "Link change is a related policy action, not proof of harmful execution.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1484/001/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-GPO-005",
+      "module": "GPO",
+      "title": "GPO permissions review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; endpoint Security; SYSVOL audit",
+      "prerequisites": "Collect directory changes and relevant file share auditing; obtain authorized GPO snapshots",
+      "detection_hypothesis": "Review policy ACL and designated owners",
+      "positive_evidence": "Compare policy-object and associated file permissions against approved policy editors and owners.",
+      "negative_control": "Approved policy delegation.",
+      "limitations": "Configuration review does not establish actual policy modification.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-GPO-006",
+      "module": "GPO",
+      "title": "SYSVOL write audit",
+      "mode": "evidence_review",
+      "event_ids": [
+        5145
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; endpoint Security; SYSVOL audit",
+      "prerequisites": "Collect directory changes and relevant file share auditing; obtain authorized GPO snapshots",
+      "detection_hypothesis": "Review audited policy share access with file and change records",
+      "positive_evidence": "Review audited SYSVOL share access and independent file-change records against approved policy changes.",
+      "negative_control": "Normal policy deployment or administrative maintenance.",
+      "limitations": "5145 describes an access check; write-related access does not prove a completed file write.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-GPO-007",
+      "module": "GPO",
+      "title": "GPO version consistency",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; endpoint Security; SYSVOL audit",
+      "prerequisites": "Collect directory changes and relevant file share auditing; obtain authorized GPO snapshots",
+      "detection_hypothesis": "Compare approved policy versions across authorized snapshots",
+      "positive_evidence": "Review authorized policy backups and directory/SYSVOL version evidence with the change owner.",
+      "negative_control": "Expected propagation delay during an approved policy rollout.",
+      "limitations": "Version mismatch alone cannot establish an attack.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-GPO-008",
+      "module": "GPO",
+      "title": "Security policy drift",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; endpoint Security; SYSVOL audit",
+      "prerequisites": "Collect directory changes and relevant file share auditing; obtain authorized GPO snapshots",
+      "detection_hypothesis": "Review effective security baseline against approved policy",
+      "positive_evidence": "Compare effective security policy snapshot with approved baseline, scope and exception record.",
+      "negative_control": "Approved temporary compatibility policy.",
+      "limitations": "Drift alone does not prove compromise or policy application across all hosts.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-GPO-009",
+      "module": "GPO",
+      "title": "GPO script governance",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; endpoint Security; SYSVOL audit",
+      "prerequisites": "Collect directory changes and relevant file share auditing; obtain authorized GPO snapshots",
+      "detection_hypothesis": "Review centrally managed script inventory and approved owners",
+      "positive_evidence": "Review approved centrally managed script inventory and ownership against policy links and change records.",
+      "negative_control": "Approved software deployment or logon maintenance.",
+      "limitations": "Inventory cannot establish script execution or integrity on every endpoint.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-GPO-010",
+      "module": "GPO",
+      "title": "GPO audit completeness",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; endpoint Security; SYSVOL audit",
+      "prerequisites": "Collect directory changes and relevant file share auditing; obtain authorized GPO snapshots",
+      "detection_hypothesis": "Review directory and SYSVOL collection coverage",
+      "positive_evidence": "Reconcile directory and SYSVOL audit coverage with collector health and approved retention requirements.",
+      "negative_control": "Approved maintenance or forwarding exclusions.",
+      "limitations": "One source cannot establish complete policy-change visibility.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-001",
+      "module": "LAT",
+      "title": "RDP logon visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624
+      ],
+      "attack_candidate": "T1021.001",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Review remote interactive session and approved access inventory",
+      "positive_evidence": "Review destination session logs and approved remote-access records for the scoped account and host.",
+      "negative_control": "Help-desk or administrator RDP sessions.",
+      "limitations": "A successful remote session alone does not prove lateral movement.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1021/001/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-002",
+      "module": "LAT",
+      "title": "SMB share access visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        5140,
+        5145
+      ],
+      "attack_candidate": "T1021.002",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Review share access and administrative context",
+      "positive_evidence": "Review share-access records with the destination, identity, share purpose and approved administrative activity.",
+      "negative_control": "File access, backups and centrally managed software distribution.",
+      "limitations": "Ordinary SMB share activity is not necessarily remote administration or adversary movement.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1021/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-003",
+      "module": "LAT",
+      "title": "WinRM session visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624
+      ],
+      "attack_candidate": "T1021.006",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Correlate remote management operational logs and endpoint context",
+      "positive_evidence": "Corroborate authentication records with independently supplied WinRM operational or management records.",
+      "negative_control": "Approved remote management and configuration automation.",
+      "limitations": "A generic network logon event does not establish use of WinRM.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1021/006/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-004",
+      "module": "LAT",
+      "title": "WMI remote management visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4688
+      ],
+      "attack_candidate": "T1047",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Review WMI operational evidence and authorized administration",
+      "positive_evidence": "Correlate endpoint and management records that identify the approved WMI operation and its owner.",
+      "negative_control": "Inventory, monitoring and enterprise management software.",
+      "limitations": "Process creation alone does not establish WMI use or remote origin.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1047/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-005",
+      "module": "LAT",
+      "title": "Remote service installation visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4697
+      ],
+      "attack_candidate": "T1569.002",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Review service installation records with software deployment approvals",
+      "positive_evidence": "Review service installation records with endpoint management history and the authorized change ticket.",
+      "negative_control": "Software deployment, monitoring agent installation or updates.",
+      "limitations": "Installation evidence does not establish execution or remote origin.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1569/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-006",
+      "module": "LAT",
+      "title": "Remote scheduled task visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4698
+      ],
+      "attack_candidate": "T1053.005",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Review task creation records with remote session context",
+      "positive_evidence": "Review scheduled task creation with the task owner, approved maintenance record and supplied runtime evidence if relevant.",
+      "negative_control": "Scheduled maintenance and centrally managed tasks.",
+      "limitations": "Creation alone does not establish task execution or remote origin.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1053/005/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-007",
+      "module": "LAT",
+      "title": "Explicit credential logon visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4648
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Review explicit credential usage and authorized administration",
+      "positive_evidence": "Review explicit-credential logon record with process, session and approved administration context where available.",
+      "negative_control": "Approved run-as or scheduled administrative operation.",
+      "limitations": "4648 records an attempt with explicit credentials, not proof of successful remote logon.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-008",
+      "module": "LAT",
+      "title": "Privileged network logon",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624,
+        4672
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Review linked logon and privilege events against administrative baseline",
+      "positive_evidence": "Correlate destination logon and special-privilege records in the same host/session context against management inventory.",
+      "negative_control": "Approved remote administration or service activity.",
+      "limitations": "Privilege assignment does not establish a privileged operation or malicious movement.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-009",
+      "module": "LAT",
+      "title": "Remote management source review",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Review source host identity against approved management systems",
+      "positive_evidence": "Reconcile destination logon source with approved management inventory and time-valid network context.",
+      "negative_control": "Approved support host or remote access gateway.",
+      "limitations": "Source fields and gateway addresses may not uniquely identify the originating device.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-010",
+      "module": "LAT",
+      "title": "Domain workstation session anomaly",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624
+      ],
+      "attack_candidate": "T1078.002",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Review user/device deviations with identity context",
+      "positive_evidence": "Correlate the scoped session with account ownership, expected workstation use and incident context.",
+      "negative_control": "Travel, workstation replacement or approved support activity.",
+      "limitations": "An anomalous session is not proof of compromised domain credentials.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1078/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-011",
+      "module": "LAT",
+      "title": "Lateral movement correlation completeness",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Review endpoint, destination and DC source availability",
+      "positive_evidence": "Review whether endpoint, identity and network records share sufficient scope and time context.",
+      "negative_control": "Known collector outage or approved source migration.",
+      "limitations": "Missing telemetry is a coverage limitation, not proof of prevention.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-LAT-012",
+      "module": "LAT",
+      "title": "Administrative share governance",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "Endpoint Security; Sysmon; EDR; network IDS",
+      "prerequisites": "Collect endpoint and server audit data; validate clocks and asset identities",
+      "detection_hypothesis": "Review approved remote administration and share access policy",
+      "positive_evidence": "Compare approved administrative share access policy and role inventory with documented support requirements.",
+      "negative_control": "Approved management and deployment services.",
+      "limitations": "Share policy is not evidence of actual access or file transfer.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-IDN-001",
+      "module": "IDN",
+      "title": "Domain account creation",
+      "mode": "evidence_review",
+      "event_ids": [
+        4720
+      ],
+      "attack_candidate": "T1136.002",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; identity inventory",
+      "prerequisites": "Collect Account Management and Logon auditing",
+      "detection_hypothesis": "Review new identity against onboarding approval",
+      "positive_evidence": "Compare the account creation record with the identity provisioning request, creator and owner.",
+      "negative_control": "Approved onboarding and application-account provisioning.",
+      "limitations": "Account creation does not establish unauthorized persistence.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1136/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-IDN-002",
+      "module": "IDN",
+      "title": "Domain account deletion",
+      "mode": "evidence_review",
+      "event_ids": [
+        4726
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity inventory",
+      "prerequisites": "Collect Account Management and Logon auditing",
+      "detection_hypothesis": "Review identity removal against offboarding records",
+      "positive_evidence": "Reconcile account deletion with stable account identity and approved offboarding ticket.",
+      "negative_control": "Normal employee offboarding or cleanup.",
+      "limitations": "Deletion does not prove revocation of all sessions or external access.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-IDN-003",
+      "module": "IDN",
+      "title": "Disabled account enablement",
+      "mode": "evidence_review",
+      "event_ids": [
+        4722
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity inventory",
+      "prerequisites": "Collect Account Management and Logon auditing",
+      "detection_hypothesis": "Review enablement against identity lifecycle approvals",
+      "positive_evidence": "Review account enablement actor and target with approved reactivation and owner record.",
+      "negative_control": "Approved returning employee or service recovery.",
+      "limitations": "Enablement does not establish a subsequent sign-in.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-IDN-004",
+      "module": "IDN",
+      "title": "Domain account disablement",
+      "mode": "evidence_review",
+      "event_ids": [
+        4725
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity inventory",
+      "prerequisites": "Collect Account Management and Logon auditing",
+      "detection_hypothesis": "Review disablement against approved lifecycle activity",
+      "positive_evidence": "Review disabled-account event with approved lifecycle action and owner confirmation.",
+      "negative_control": "Ordinary offboarding or temporary suspension.",
+      "limitations": "Disablement alone does not prove all existing sessions ended immediately.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-IDN-005",
+      "module": "IDN",
+      "title": "Password reset visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4724
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity inventory",
+      "prerequisites": "Collect Account Management and Logon auditing",
+      "detection_hypothesis": "Review reset events with helpdesk and account owner records",
+      "positive_evidence": "Review reset-attempt outcome, target account and helpdesk authorization.",
+      "negative_control": "Approved account recovery or service maintenance.",
+      "limitations": "4724 can represent success or failure; reset attempt is not proof of account compromise.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-IDN-006",
+      "module": "IDN",
+      "title": "Account lockout visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4740
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity inventory",
+      "prerequisites": "Collect Account Management and Logon auditing",
+      "detection_hypothesis": "Review lockout records with authentication context",
+      "positive_evidence": "Review lockout record with scoped authentication timeline and support context.",
+      "negative_control": "Stale saved credentials or ordinary password errors.",
+      "limitations": "Lockout alone does not establish hostile intent or the originating endpoint.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-IDN-007",
+      "module": "IDN",
+      "title": "Privileged group member addition",
+      "mode": "evidence_review",
+      "event_ids": [
+        4728,
+        4732,
+        4756
+      ],
+      "attack_candidate": "T1098.007",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; identity inventory",
+      "prerequisites": "Collect Account Management and Logon auditing",
+      "detection_hypothesis": "Review membership additions against access approvals",
+      "positive_evidence": "Compare membership change evidence and resulting membership snapshot with the privileged access request.",
+      "negative_control": "Approved just-in-time administration or role assignment.",
+      "limitations": "A group addition does not establish attacker control; assess effective permissions separately.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1098/007/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-IDN-008",
+      "module": "IDN",
+      "title": "Privileged group member removal",
+      "mode": "evidence_review",
+      "event_ids": [
+        4729,
+        4733,
+        4757
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity inventory",
+      "prerequisites": "Collect Account Management and Logon auditing",
+      "detection_hypothesis": "Review membership removals against approved changes",
+      "positive_evidence": "Compare group membership removal record and approved role-change ticket using stable group and member identity.",
+      "negative_control": "Approved offboarding or access recertification.",
+      "limitations": "Removal does not establish loss of all effective access through other memberships.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-IDN-009",
+      "module": "IDN",
+      "title": "Account setting modification",
+      "mode": "evidence_review",
+      "event_ids": [
+        4738
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity inventory",
+      "prerequisites": "Collect Account Management and Logon auditing",
+      "detection_hypothesis": "Review user account changes against baseline and approval",
+      "positive_evidence": "Compare user account modification and relevant before/after attributes against approved lifecycle change.",
+      "negative_control": "Approved profile or policy maintenance.",
+      "limitations": "A generic account change does not prove a security-sensitive setting changed.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-IDN-010",
+      "module": "IDN",
+      "title": "Domain password policy review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; identity inventory",
+      "prerequisites": "Collect Account Management and Logon auditing",
+      "detection_hypothesis": "Review effective password policy against organizational requirements",
+      "positive_evidence": "Review effective password policy and applicable fine-grained policy inventory with approved identity governance.",
+      "negative_control": "Documented policy exceptions for managed identities.",
+      "limitations": "A policy review is not proof of password strength or runtime enforcement.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-TRU-001",
+      "module": "TRU",
+      "title": "Trust creation visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4706
+      ],
+      "attack_candidate": "T1484.002",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "DC Security; trust inventory",
+      "prerequisites": "Collect Authentication Policy Change and authorized trust configuration snapshots",
+      "detection_hypothesis": "Review new trusted domain relationship against approval",
+      "positive_evidence": "Compare the new trust record with approved architecture, counterpart ownership and change record.",
+      "negative_control": "Approved merger, migration or integration.",
+      "limitations": "Trust existence does not demonstrate adversarial use.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1484/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-TRU-002",
+      "module": "TRU",
+      "title": "Trust removal visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4707
+      ],
+      "attack_candidate": "T1484.002",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "DC Security; trust inventory",
+      "prerequisites": "Collect Authentication Policy Change and authorized trust configuration snapshots",
+      "detection_hypothesis": "Review removed trust relationship against change record",
+      "positive_evidence": "Review the removed trust and approved decommission plan with dependent service owners.",
+      "negative_control": "Planned domain separation or retirement.",
+      "limitations": "Removal is a related trust change, not necessarily adversarial trust manipulation.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1484/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-TRU-003",
+      "module": "TRU",
+      "title": "Trust modification visibility",
+      "mode": "evidence_review",
+      "event_ids": [
+        4716
+      ],
+      "attack_candidate": "T1484.002",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; trust inventory",
+      "prerequisites": "Collect Authentication Policy Change and authorized trust configuration snapshots",
+      "detection_hypothesis": "Review trust configuration changes against authorized baseline",
+      "positive_evidence": "Compare documented before/after trust configuration and approval with the scoped change record.",
+      "negative_control": "Approved changes during migration or maintenance.",
+      "limitations": "Configuration drift alone does not establish misuse.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1484/002/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-TRU-004",
+      "module": "TRU",
+      "title": "Trust direction review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; trust inventory",
+      "prerequisites": "Collect Authentication Policy Change and authorized trust configuration snapshots",
+      "detection_hypothesis": "Review trust relationships against business ownership",
+      "positive_evidence": "Compare trust direction and business owners with approved cross-domain access design.",
+      "negative_control": "Approved organizational integration or migration.",
+      "limitations": "Trust direction alone does not establish effective cross-domain authorization.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-TRU-005",
+      "module": "TRU",
+      "title": "Trust transitivity review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; trust inventory",
+      "prerequisites": "Collect Authentication Policy Change and authorized trust configuration snapshots",
+      "detection_hypothesis": "Review transitive relationships against architecture requirements",
+      "positive_evidence": "Review transitivity settings against approved forest/domain architecture and documented exceptions.",
+      "negative_control": "Approved multi-domain design.",
+      "limitations": "Configuration alone does not establish reachable resources or actual authentication.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-TRU-006",
+      "module": "TRU",
+      "title": "Trust SID filtering posture",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; trust inventory",
+      "prerequisites": "Collect Authentication Policy Change and authorized trust configuration snapshots",
+      "detection_hypothesis": "Review trust protections against approved security policy",
+      "positive_evidence": "Review approved trust configuration snapshots and security architecture decisions with domain owners.",
+      "negative_control": "Approved migration exception with documented expiry.",
+      "limitations": "Settings alone do not establish cross-domain compromise.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-TRU-007",
+      "module": "TRU",
+      "title": "Selective authentication posture",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; trust inventory",
+      "prerequisites": "Collect Authentication Policy Change and authorized trust configuration snapshots",
+      "detection_hypothesis": "Review trust authentication controls against approved access design",
+      "positive_evidence": "Review effective selective-authentication posture against approved cross-domain access requirements.",
+      "negative_control": "Approved trust migration exception.",
+      "limitations": "Configuration alone does not establish actual enforcement or resource access.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-TRU-008",
+      "module": "TRU",
+      "title": "Cross-domain authentication anomaly",
+      "mode": "evidence_review",
+      "event_ids": [
+        4624,
+        4769
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; trust inventory",
+      "prerequisites": "Collect Authentication Policy Change and authorized trust configuration snapshots",
+      "detection_hypothesis": "Review identity and destination domain context against authorized flows",
+      "positive_evidence": "Correlate source and destination domain identities in scoped authentication records against approved trust flows.",
+      "negative_control": "Approved cross-domain resource access.",
+      "limitations": "Authentication records alone do not establish unauthorized cross-domain movement.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-TRU-009",
+      "module": "TRU",
+      "title": "Trust inventory completeness",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; trust inventory",
+      "prerequisites": "Collect Authentication Policy Change and authorized trust configuration snapshots",
+      "detection_hypothesis": "Review inventory coverage across in-scope domains and forests",
+      "positive_evidence": "Reconcile trust inventory across authorized domain owners and identify inaccessible or stale sources.",
+      "negative_control": "Approved retired domain or temporary inventory outage.",
+      "limitations": "Partial inventory cannot establish that no additional trusts exist.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PER-001",
+      "module": "PER",
+      "title": "Additional directory credentials review",
+      "mode": "evidence_review",
+      "event_ids": [
+        5136
+      ],
+      "attack_candidate": "T1098",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "DC Security; EDR; directory inventory",
+      "prerequisites": "Collect directory and account management events; maintain protected-object baseline",
+      "detection_hypothesis": "Review identity credential-related changes against approved provisioning",
+      "positive_evidence": "Review independently supplied directory attribute change records with credential governance and identity ownership.",
+      "negative_control": "Approved credential enrollment or rotation.",
+      "limitations": "A generic directory change is not proof of unauthorized credential addition.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1098/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PER-002",
+      "module": "PER",
+      "title": "SID history change",
+      "mode": "evidence_review",
+      "event_ids": [
+        4765,
+        4766
+      ],
+      "attack_candidate": "T1134.005",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; EDR; directory inventory",
+      "prerequisites": "Collect directory and account management events; maintain protected-object baseline",
+      "detection_hypothesis": "Review migration-related identity changes with approved migration records",
+      "positive_evidence": "Review SID-history change records alongside migration approval and independently supplied identity evidence.",
+      "negative_control": "Approved domain migration.",
+      "limitations": "A change alone does not establish unauthorized token manipulation or use.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1134/005/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PER-003",
+      "module": "PER",
+      "title": "Privileged group persistence review",
+      "mode": "evidence_review",
+      "event_ids": [
+        4728,
+        4732,
+        4756
+      ],
+      "attack_candidate": "T1098.007",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; EDR; directory inventory",
+      "prerequisites": "Collect directory and account management events; maintain protected-object baseline",
+      "detection_hypothesis": "Review persistent privileged access against periodic access review",
+      "positive_evidence": "Review privileged group changes, access approvals, expiry and resulting membership.",
+      "negative_control": "Approved temporary or permanent role assignment.",
+      "limitations": "Membership change alone cannot demonstrate persistence or actor intent.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1098/007/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PER-004",
+      "module": "PER",
+      "title": "Protected identity permission drift",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; EDR; directory inventory",
+      "prerequisites": "Collect directory and account management events; maintain protected-object baseline",
+      "detection_hypothesis": "Review protected identity permissions against approved baseline",
+      "positive_evidence": "Compare protected identity effective permissions with dated approved baseline and owner review.",
+      "negative_control": "Approved privileged access recertification.",
+      "limitations": "Permission drift does not prove persistence or actual access.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PER-005",
+      "module": "PER",
+      "title": "Domain audit policy change",
+      "mode": "evidence_review",
+      "event_ids": [
+        4719
+      ],
+      "attack_candidate": "T1685.001",
+      "attack_mapping_status": "related_context_reviewed",
+      "sources": "DC Security; EDR; directory inventory",
+      "prerequisites": "Collect directory and account management events; maintain protected-object baseline",
+      "detection_hypothesis": "Review changes to audit policy against approved maintenance",
+      "positive_evidence": "Compare audit policy snapshots and the authorized change record; assess whether logging was actually reduced.",
+      "negative_control": "Approved audit-policy tuning and maintenance.",
+      "limitations": "A policy change event alone does not establish impaired logging.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1685/001/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PER-006",
+      "module": "PER",
+      "title": "Security log clear event",
+      "mode": "evidence_review",
+      "event_ids": [
+        1102
+      ],
+      "attack_candidate": "T1685.005",
+      "attack_mapping_status": "concept_association_reviewed",
+      "sources": "DC Security; EDR; directory inventory",
+      "prerequisites": "Collect directory and account management events; maintain protected-object baseline",
+      "detection_hypothesis": "Review log clear evidence with administrator and retention records",
+      "positive_evidence": "Review the log-clear event with the responsible administrator, retention record and approved maintenance history.",
+      "negative_control": "Authorized log maintenance or lab reset.",
+      "limitations": "The event establishes a reported clear action, not necessarily malicious intent.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration",
+        "https://attack.mitre.org/techniques/T1685/005/"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PER-007",
+      "module": "PER",
+      "title": "Directory object restoration",
+      "mode": "evidence_review",
+      "event_ids": [
+        5138
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; EDR; directory inventory",
+      "prerequisites": "Collect directory and account management events; maintain protected-object baseline",
+      "detection_hypothesis": "Review restored object against recovery change records",
+      "positive_evidence": "Review directory object undelete record with stable object identity and recovery ticket.",
+      "negative_control": "Approved accidental-deletion recovery.",
+      "limitations": "Restoration does not establish that all prior permissions or services were restored.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PER-008",
+      "module": "PER",
+      "title": "Directory object move",
+      "mode": "evidence_review",
+      "event_ids": [
+        5139
+      ],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; EDR; directory inventory",
+      "prerequisites": "Collect directory and account management events; maintain protected-object baseline",
+      "detection_hypothesis": "Review moved object and policy scope impact against approval",
+      "positive_evidence": "Compare object-move record and before/after location with approved change and policy-scope review.",
+      "negative_control": "Approved OU restructuring.",
+      "limitations": "An object move does not independently prove a resulting policy change or malicious persistence.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PER-009",
+      "module": "PER",
+      "title": "Sensitive identity lifecycle drift",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; EDR; directory inventory",
+      "prerequisites": "Collect directory and account management events; maintain protected-object baseline",
+      "detection_hypothesis": "Review dormant, orphaned and unexpected privileged identities",
+      "positive_evidence": "Reconcile dormant and orphaned privileged identities with owner, employment/service status and approved exceptions.",
+      "negative_control": "Approved emergency or rarely used service account.",
+      "limitations": "Inactivity and missing ownership records alone do not establish compromise.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    },
+    {
+      "id": "DH-PER-010",
+      "module": "PER",
+      "title": "Defensive sensor coverage review",
+      "mode": "configuration_review",
+      "event_ids": [],
+      "attack_candidate": null,
+      "attack_mapping_status": "not_assigned",
+      "sources": "DC Security; EDR; directory inventory",
+      "prerequisites": "Collect directory and account management events; maintain protected-object baseline",
+      "detection_hypothesis": "Review endpoint and DC sensor health, coverage and retention",
+      "positive_evidence": "Compare expected endpoint sensors with the approved asset inventory, source heartbeat and retention status.",
+      "negative_control": "Documented maintenance or approved decommission.",
+      "limitations": "Healthy heartbeat alone does not establish coverage for every security behavior.",
+      "references": [
+        "https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration"
+      ],
+      "review_depth": "expanded_reference"
+    }
+  ]
+}

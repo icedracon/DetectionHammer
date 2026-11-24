@@ -1,0 +1,15 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "detectionhammer-ad",
+  "version": "0.0.1-dev.4",
+  "description": "Review Active Directory detection evidence, security posture and experimental visibility rules.",
+  "author": {
+    "name": "ICEDRACON"
+  },
+  "keywords": [
+    "active-directory",
+    "soc",
+    "detection-engineering",
+    "purple-team"
+  ]
+}

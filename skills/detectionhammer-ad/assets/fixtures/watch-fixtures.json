@@ -1,0 +1,758 @@
+[
+  {
+    "rule": "account-created",
+    "event": {
+      "channel": "Security",
+      "event_id": 4720
+    },
+    "expected": true
+  },
+  {
+    "rule": "account-created",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-created",
+    "event": {
+      "channel": "Application",
+      "event_id": 4720
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-enabled",
+    "event": {
+      "channel": "Security",
+      "event_id": 4722
+    },
+    "expected": true
+  },
+  {
+    "rule": "account-enabled",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-enabled",
+    "event": {
+      "channel": "Application",
+      "event_id": 4722
+    },
+    "expected": false
+  },
+  {
+    "rule": "password-reset",
+    "event": {
+      "channel": "Security",
+      "event_id": 4724
+    },
+    "expected": true
+  },
+  {
+    "rule": "password-reset",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "password-reset",
+    "event": {
+      "channel": "Application",
+      "event_id": 4724
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-deleted",
+    "event": {
+      "channel": "Security",
+      "event_id": 4726
+    },
+    "expected": true
+  },
+  {
+    "rule": "account-deleted",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-deleted",
+    "event": {
+      "channel": "Application",
+      "event_id": 4726
+    },
+    "expected": false
+  },
+  {
+    "rule": "global-group-add",
+    "event": {
+      "channel": "Security",
+      "event_id": 4728
+    },
+    "expected": true
+  },
+  {
+    "rule": "global-group-add",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "global-group-add",
+    "event": {
+      "channel": "Application",
+      "event_id": 4728
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-lockout",
+    "event": {
+      "channel": "Security",
+      "event_id": 4740
+    },
+    "expected": true
+  },
+  {
+    "rule": "account-lockout",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-lockout",
+    "event": {
+      "channel": "Application",
+      "event_id": 4740
+    },
+    "expected": false
+  },
+  {
+    "rule": "computer-created",
+    "event": {
+      "channel": "Security",
+      "event_id": 4741
+    },
+    "expected": true
+  },
+  {
+    "rule": "computer-created",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "computer-created",
+    "event": {
+      "channel": "Application",
+      "event_id": 4741
+    },
+    "expected": false
+  },
+  {
+    "rule": "trust-created",
+    "event": {
+      "channel": "Security",
+      "event_id": 4706
+    },
+    "expected": true
+  },
+  {
+    "rule": "trust-created",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "trust-created",
+    "event": {
+      "channel": "Application",
+      "event_id": 4706
+    },
+    "expected": false
+  },
+  {
+    "rule": "audit-policy-change",
+    "event": {
+      "channel": "Security",
+      "event_id": 4719
+    },
+    "expected": true
+  },
+  {
+    "rule": "audit-policy-change",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "audit-policy-change",
+    "event": {
+      "channel": "Application",
+      "event_id": 4719
+    },
+    "expected": false
+  },
+  {
+    "rule": "security-log-clear",
+    "event": {
+      "channel": "Security",
+      "event_id": 1102
+    },
+    "expected": true
+  },
+  {
+    "rule": "security-log-clear",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "security-log-clear",
+    "event": {
+      "channel": "Application",
+      "event_id": 1102
+    },
+    "expected": false
+  },
+  {
+    "rule": "directory-object-change",
+    "event": {
+      "channel": "Security",
+      "event_id": 5136
+    },
+    "expected": true
+  },
+  {
+    "rule": "directory-object-change",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "directory-object-change",
+    "event": {
+      "channel": "Application",
+      "event_id": 5136
+    },
+    "expected": false
+  },
+  {
+    "rule": "certificate-issued",
+    "event": {
+      "channel": "Security",
+      "event_id": 4887
+    },
+    "expected": true
+  },
+  {
+    "rule": "certificate-issued",
+    "event": {
+      "channel": "Security",
+      "event_id": 999999
+    },
+    "expected": false
+  },
+  {
+    "rule": "certificate-issued",
+    "event": {
+      "channel": "Application",
+      "event_id": 4887
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-created",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-created",
+    "event": {
+      "channel": "Security",
+      "event_id": "4720"
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-created",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-created",
+    "event": {
+      "event_id": 4720
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-created",
+    "event": {
+      "channel": "Security",
+      "event_id": 4720,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  },
+  {
+    "rule": "account-enabled",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-enabled",
+    "event": {
+      "channel": "Security",
+      "event_id": "4722"
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-enabled",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-enabled",
+    "event": {
+      "event_id": 4722
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-enabled",
+    "event": {
+      "channel": "Security",
+      "event_id": 4722,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  },
+  {
+    "rule": "password-reset",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "password-reset",
+    "event": {
+      "channel": "Security",
+      "event_id": "4724"
+    },
+    "expected": false
+  },
+  {
+    "rule": "password-reset",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "password-reset",
+    "event": {
+      "event_id": 4724
+    },
+    "expected": false
+  },
+  {
+    "rule": "password-reset",
+    "event": {
+      "channel": "Security",
+      "event_id": 4724,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  },
+  {
+    "rule": "account-deleted",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-deleted",
+    "event": {
+      "channel": "Security",
+      "event_id": "4726"
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-deleted",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-deleted",
+    "event": {
+      "event_id": 4726
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-deleted",
+    "event": {
+      "channel": "Security",
+      "event_id": 4726,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  },
+  {
+    "rule": "global-group-add",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "global-group-add",
+    "event": {
+      "channel": "Security",
+      "event_id": "4728"
+    },
+    "expected": false
+  },
+  {
+    "rule": "global-group-add",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "global-group-add",
+    "event": {
+      "event_id": 4728
+    },
+    "expected": false
+  },
+  {
+    "rule": "global-group-add",
+    "event": {
+      "channel": "Security",
+      "event_id": 4728,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  },
+  {
+    "rule": "account-lockout",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-lockout",
+    "event": {
+      "channel": "Security",
+      "event_id": "4740"
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-lockout",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-lockout",
+    "event": {
+      "event_id": 4740
+    },
+    "expected": false
+  },
+  {
+    "rule": "account-lockout",
+    "event": {
+      "channel": "Security",
+      "event_id": 4740,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  },
+  {
+    "rule": "computer-created",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "computer-created",
+    "event": {
+      "channel": "Security",
+      "event_id": "4741"
+    },
+    "expected": false
+  },
+  {
+    "rule": "computer-created",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "computer-created",
+    "event": {
+      "event_id": 4741
+    },
+    "expected": false
+  },
+  {
+    "rule": "computer-created",
+    "event": {
+      "channel": "Security",
+      "event_id": 4741,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  },
+  {
+    "rule": "trust-created",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "trust-created",
+    "event": {
+      "channel": "Security",
+      "event_id": "4706"
+    },
+    "expected": false
+  },
+  {
+    "rule": "trust-created",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "trust-created",
+    "event": {
+      "event_id": 4706
+    },
+    "expected": false
+  },
+  {
+    "rule": "trust-created",
+    "event": {
+      "channel": "Security",
+      "event_id": 4706,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  },
+  {
+    "rule": "audit-policy-change",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "audit-policy-change",
+    "event": {
+      "channel": "Security",
+      "event_id": "4719"
+    },
+    "expected": false
+  },
+  {
+    "rule": "audit-policy-change",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "audit-policy-change",
+    "event": {
+      "event_id": 4719
+    },
+    "expected": false
+  },
+  {
+    "rule": "audit-policy-change",
+    "event": {
+      "channel": "Security",
+      "event_id": 4719,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  },
+  {
+    "rule": "security-log-clear",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "security-log-clear",
+    "event": {
+      "channel": "Security",
+      "event_id": "1102"
+    },
+    "expected": false
+  },
+  {
+    "rule": "security-log-clear",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "security-log-clear",
+    "event": {
+      "event_id": 1102
+    },
+    "expected": false
+  },
+  {
+    "rule": "security-log-clear",
+    "event": {
+      "channel": "Security",
+      "event_id": 1102,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  },
+  {
+    "rule": "directory-object-change",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "directory-object-change",
+    "event": {
+      "channel": "Security",
+      "event_id": "5136"
+    },
+    "expected": false
+  },
+  {
+    "rule": "directory-object-change",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "directory-object-change",
+    "event": {
+      "event_id": 5136
+    },
+    "expected": false
+  },
+  {
+    "rule": "directory-object-change",
+    "event": {
+      "channel": "Security",
+      "event_id": 5136,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  },
+  {
+    "rule": "certificate-issued",
+    "event": {
+      "channel": "Security"
+    },
+    "expected": false
+  },
+  {
+    "rule": "certificate-issued",
+    "event": {
+      "channel": "Security",
+      "event_id": "4887"
+    },
+    "expected": false
+  },
+  {
+    "rule": "certificate-issued",
+    "event": {
+      "channel": "Security",
+      "event_id": true
+    },
+    "expected": false
+  },
+  {
+    "rule": "certificate-issued",
+    "event": {
+      "event_id": 4887
+    },
+    "expected": false
+  },
+  {
+    "rule": "certificate-issued",
+    "event": {
+      "channel": "Security",
+      "event_id": 4887,
+      "context": "approved administrative activity"
+    },
+    "expected": true
+  }
+]

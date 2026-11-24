@@ -1,0 +1,18 @@
+title: Audit policy modification - AD review signal
+id: c554cead-b4b5-5b97-af68-b84cec92e614
+status: experimental
+description: Event visibility watch; not a standalone malicious-activity verdict.
+  Confirm scope, audit source, and business context.
+references:
+- https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4719
+  condition: selection
+falsepositives:
+- Approved audit tuning or policy rollout.
+level: informational
+author: DetectionHammer contributors

@@ -1,0 +1,18 @@
+title: Global security group membership addition - AD review signal
+id: 89b5cbff-635a-5148-8f15-411222208065
+status: experimental
+description: Event visibility watch; not a standalone malicious-activity verdict.
+  Confirm scope, audit source, and business context.
+references:
+- https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4728
+  condition: selection
+falsepositives:
+- Approved role assignment or temporary administrative access.
+level: informational
+author: DetectionHammer contributors

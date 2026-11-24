@@ -1,0 +1,3 @@
+# Contributing
+
+Contribute defensively focused, original or properly licensed scenario guidance and synthetic, sanitized fixtures. Include primary references, exact source and audit assumptions, a representative negative control, uncertainty and validation status. Do not include exploit payloads, live secrets, raw customer logs or instructions to disable protection. Keep JSON, CSV and module reference cards aligned. Run `python -m unittest discover -s tests -v` after installing `requirements-dev.txt`. ATT&CK mappings and vendor field semantics require specialist review before promotion from candidate status.

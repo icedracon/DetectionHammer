@@ -1,5 +1,5 @@
 {
   "name": "detectionhammer-ad",
-  "version": "1.2.0-preview",
-  "description": "Active Directory defensive evidence review skill"
+  "version": "0.0.1-dev.4",
+  "description": "Active Directory defensive evidence and detection review skill"
 }

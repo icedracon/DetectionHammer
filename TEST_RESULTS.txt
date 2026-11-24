@@ -1,0 +1,82 @@
+DetectionHammer 0.0.1-beta packaging verification
+3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]
+
+$ /opt/pyvenv/bin/python -m unittest discover -s tests -v
+test_complete_synthetic (test_benchmark_scoring.BenchTests.test_complete_synthetic) ... ok
+test_critical_failure (test_benchmark_scoring.BenchTests.test_critical_failure) ... ok
+test_duplicate (test_benchmark_scoring.BenchTests.test_duplicate) ... ok
+test_empty (test_benchmark_scoring.BenchTests.test_empty) ... ok
+test_noncomparable (test_benchmark_scoring.BenchTests.test_noncomparable) ... ok
+test_partial (test_benchmark_scoring.BenchTests.test_partial) ... ok
+test_association_review (test_beta_integrity.BetaIntegrity.test_association_review) ... ok
+test_eval_pack (test_beta_integrity.BetaIntegrity.test_eval_pack) ... ok
+test_full_methodology_and_csv (test_beta_integrity.BetaIntegrity.test_full_methodology_and_csv) ... ok
+test_markdown_exact_sections (test_beta_integrity.BetaIntegrity.test_markdown_exact_sections) ... ok
+test_skill_local_links (test_beta_integrity.BetaIntegrity.test_skill_local_links) ... ok
+test_all_boolean_combinations (test_evidence_review.EvidenceTests.test_all_boolean_combinations) ... ok
+test_independent_axes (test_evidence_review.EvidenceTests.test_independent_axes) ... ok
+test_validation (test_evidence_review.EvidenceTests.test_validation) ... ok
+test_catalog_csv_agreement (test_release.ReleaseTests.test_catalog_csv_agreement) ... ok
+test_cli (test_release.ReleaseTests.test_cli) ... ok
+test_manifest_consistency (test_release.ReleaseTests.test_manifest_consistency) ... ok
+test_markdown_scenario_ids (test_release.ReleaseTests.test_markdown_scenario_ids) ... ok
+test_no_execution_hooks (test_release.ReleaseTests.test_no_execution_hooks) ... ok
+test_real_yaml_matches_fixture_semantics (test_release.ReleaseTests.test_real_yaml_matches_fixture_semantics) ... ok
+test_verdict_matrix (test_release.ReleaseTests.test_verdict_matrix) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 2.354s
+
+OK
+
+$ /opt/pyvenv/bin/python skills/detectionhammer-ad/scripts/dh_review.py validate
+{
+  "catalog_entries": 150,
+  "module_counts": {
+    "KRB": 20,
+    "NTL": 12,
+    "LDAP": 10,
+    "PKI": 20,
+    "DEL": 12,
+    "ACL": 15,
+    "DC": 10,
+    "GPO": 10,
+    "LAT": 12,
+    "IDN": 10,
+    "TRU": 9,
+    "PER": 10
+  },
+  "candidate_attack_mappings": 34,
+  "modes": {
+    "evidence_review": 100,
+    "configuration_review": 50
+  },
+  "errors": [],
+  "scope": "structural checks only"
+}
+
+$ /opt/pyvenv/bin/python skills/detectionhammer-ad/scripts/dh_review.py fixtures
+{
+  "fixtures": 96,
+  "passed": 96,
+  "errors": [],
+  "mode": "synthetic_visibility_only"
+}
+
+$ /opt/pyvenv/bin/python skills/detectionhammer-ad/scripts/evidence_review.py examples/evidence.json
+{
+  "mode": "synthetic",
+  "verdict": "INCONCLUSIVE",
+  "execution": "REPORTED",
+  "telemetry": "REPORTED",
+  "alert": "UNKNOWN",
+  "prevention": "UNVERIFIED",
+  "coverage_eligible": false,
+  "evidence_verified_by_tool": false,
+  "evidence_refs": [
+    "synthetic:example-001"
+  ],
+  "note": "Analyst assertions only; independently verify provenance."
+}
+
+Native agent, native Sigma, real AI benchmarks and public CI not verified.

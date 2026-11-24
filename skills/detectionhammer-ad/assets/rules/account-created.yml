@@ -1,0 +1,18 @@
+title: Domain account creation - AD review signal
+id: fd922bb8-7fea-513a-9abf-adf25d7df764
+status: experimental
+description: Event visibility watch; not a standalone malicious-activity verdict.
+  Confirm scope, audit source, and business context.
+references:
+- https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4720
+  condition: selection
+falsepositives:
+- Approved onboarding or service-account provisioning.
+level: informational
+author: DetectionHammer contributors

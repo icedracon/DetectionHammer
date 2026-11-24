@@ -1,0 +1,18 @@
+title: Account lockout - AD review signal
+id: d6092ef8-4e3f-5b00-b44b-82ed2baeafd7
+status: experimental
+description: Event visibility watch; not a standalone malicious-activity verdict.
+  Confirm scope, audit source, and business context.
+references:
+- https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4740
+  condition: selection
+falsepositives:
+- Ordinary password mistakes or a client using stale credentials.
+level: informational
+author: DetectionHammer contributors

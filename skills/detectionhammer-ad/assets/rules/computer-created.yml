@@ -1,0 +1,18 @@
+title: Computer account creation - AD review signal
+id: c84a215a-ba70-5505-81c6-c3e896e28d17
+status: experimental
+description: Event visibility watch; not a standalone malicious-activity verdict.
+  Confirm scope, audit source, and business context.
+references:
+- https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/advanced-audit-policy-configuration
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4741
+  condition: selection
+falsepositives:
+- Approved domain join or workstation replacement.
+level: informational
+author: DetectionHammer contributors
