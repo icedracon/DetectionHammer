@@ -7,7 +7,7 @@
 <p align="center">Active Directory · Detection Engineering · Evidence Validation</p>
 
 <p align="center">
-  <a href="https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml"><img alt="Evidence checks" src="https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml/badge.svg?branch=main"></a>
+  <a href="https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml"><img alt="CI / Evidence checks (main push)" src="https://github.com/icedracon/DetectionHammer/actions/workflows/evidence-checks.yml/badge.svg?branch=main&amp;event=push"></a>
   <img alt="Release status: development preview" src="https://img.shields.io/badge/status-development%20preview-7c3aed?style=flat-square">
   <img alt="Claude Code and Codex" src="https://img.shields.io/badge/agents-Claude%20Code%20%7C%20Codex-a855f7?style=flat-square">
   <img alt="12 AD review domains" src="https://img.shields.io/badge/AD%20domains-12-6d28d9?style=flat-square">
