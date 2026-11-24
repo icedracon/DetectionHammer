@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/detectionhammer-hero.svg" alt="DetectionHammer animated purple identity, telemetry and evidence architecture" width="100%">
+  <img src="assets/detectionhammer-cinematic.webp" alt="DetectionHammer cinematic purple shield, hammer, identity and telemetry architecture" width="100%">
 </p>
 
 <h1 align="center">DetectionHammer</h1>
@@ -23,6 +23,10 @@
 
 > [!IMPORTANT]
 > **Development preview | Next planned release: v0.0.1-beta.** This repository currently contains the standalone skill, 12 domain-level review methods, offline evidence evaluator and tests. The full 150-card beta source and experimental Sigma pack must be imported before the beta is published. Native agent installation, SIEM compilation and live detection validation remain unverified.
+
+<p align="center">
+  <img src="assets/detectionhammer-hero.svg" alt="Animated DetectionHammer identity, telemetry and evidence architecture" width="100%">
+</p>
 
 ## Why DetectionHammer?
 
